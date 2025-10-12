@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-bold: "edBold", sans-serif;
+  --font-light: "edLight", sans-serif;
+  --font-regular: "edRegular", sans-serif;
+  --font-crypt: "CreakingCrypt", sans-serif;
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@font-face {  
+  font-family: edBold;  
+  font-style: normal;  
+  font-weight: 200 700;  font-display: swap;  
+  src: url("../public/fonts/EverydaySans-Bold-Web.woff2") format("woff2");
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {  
+  font-family: edLight;  
+  font-style: normal;  
+  font-weight: 200 700;  font-display: swap;  
+  src: url("../public/fonts/EverydaySans-Light-Web.woff2") format("woff2");
 }
-
+@font-face {  
+  font-family: edRegular;  
+  font-style: normal;  
+  font-weight: 200 700;  font-display: swap;  
+  src: url("../public/fonts/EverydaySans-Regular-Web.woff2") format("woff2");
+}
+@font-face {  
+  font-family: CreakingCrypt;  
+  font-style: normal;  
+  font-weight: 200 700;  font-display: swap;  
+  src: url("../public/fonts/CreakingCrypt-Regular.woff2") format("woff2");
+}
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  max-width: 100%;
+  overflow:hidden;
+  background-color: #001E60;
+  font-family: var(--font-edbold);
+  color: #001E60;
+  width: 100vw;
+  height: 100vh;
+  /*
+  font-family: var(--font-edMedium);
+  font-family: var(--font-edBold);
+  font-family: var(--font-creaking);
+  */
 }
+h1 {
+  font-size: 6vh;
+  color: #001E60;
+}
+p {
+
+}
+
+/*
+ module.exports = {
+  theme: {
+    extend: {
+      fontFamily: {
+        customSans: ['"Custom Sans"', 'sans-serif'], // Add a new font family
+        serif: ['"My Custom Serif"', 'serif'],     // Override default serif
+      },
+    },
+  },
+  // ... other configurations
+}; 
+*/

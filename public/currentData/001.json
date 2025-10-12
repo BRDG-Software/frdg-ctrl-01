@@ -1,0 +1,37 @@
+{
+	"displayOptions" : {
+		"currentContent": "/imgIcon/screen2/walmart/frame1.png",
+		"displayType": "all"
+	},
+	"pictolightOptions" : {
+		"001":{
+			"001": {
+				"show":true,
+				"position":170,
+				"width": 180,
+				"color": "#55ee77"
+			},
+			"002": {
+				"show":true,
+				"position":170,
+				"width": 180,
+				"color": "#55ee77"
+			},
+			"003": {
+				"show":true,
+				"position":170,
+				"width": 180,
+				"color": "#55ee77"
+			}
+		}
+	},
+	"productlightOptions":{
+		"currentShelf":"001",
+		"001": {
+			"lightOn":true,
+			"sliderTemp":"150",
+			"lightBrightness":"80",
+			"currentColor": "#22dd88"
+		}
+	}
+}

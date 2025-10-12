@@ -1,3 +1,13 @@
+css triangle generator tool
+https://www.cssportal.com/css-triangle-generator/
+
+sending data from child to parent:
+https://medium.com/@ozhanli/passing-data-from-child-to-parent-components-in-react-e347ea60b1bb
+
+
+check out evergreen ui
+https://evergreen.segment.com/
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

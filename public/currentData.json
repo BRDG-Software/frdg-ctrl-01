@@ -1,0 +1,118 @@
+{
+	"case": {
+		"001": {
+			"displayOptions" : {
+				"currentContent": "/imgIcon/screen1/kraft/frame1.png",
+				"displayType": "all"
+			},
+			"pictolightOptions" : {
+				"001":{
+					"001": {
+						"show":true,
+						"position":170,
+						"width": 180,
+						"color": "#55ee77"
+					},
+					"002": {
+						"show":true,
+						"position":170,
+						"width": 180,
+						"color": "#55ee77"
+					},
+					"003": {
+						"show":true,
+						"position":170,
+						"width": 180,
+						"color": "#55ee77"
+					}
+				}
+			},
+			"productlightOptions":{
+				"001": {
+					"001": {
+						"show":true,
+						"cool":150,
+						"warm":0,
+						"color": "#22dd88"
+					}
+				}
+			}
+		},
+		"002": {
+			"displayOptions" : {
+				"currentContent": "/imgIcon/screen1/walmart/frame1.png",
+				"displayType": "all"
+			},
+			"pictolightOptions" : {
+				"001":{
+					"001": {
+						"show":true,
+						"position":170,
+						"width": 180,
+						"color": "#55ee77"
+					},
+					"002": {
+						"show":true,
+						"position":170,
+						"width": 180,
+						"color": "#55ee77"
+					},
+					"003": {
+						"show":true,
+						"position":170,
+						"width": 180,
+						"color": "#55ee77"
+					}
+				}
+			},
+			"productlightOptions":{
+				"001": {
+					"001": {
+						"show":true,
+						"cool":150,
+						"warm":0,
+						"color": "#22dd88"
+					}
+				}
+			}
+		},
+		"ALL": {
+			"displayOptions" : {
+				"currentContent": "/imgIcon/screen1/kraft/frame1.png",
+				"displayType": "all"
+			},
+			"pictolightOptions" : {
+				"001":{
+					"001": {
+						"show":true,
+						"position":170,
+						"width": 180,
+						"color": "#55ee77"
+					},
+					"002": {
+						"show":true,
+						"position":170,
+						"width": 180,
+						"color": "#55ee77"
+					},
+					"003": {
+						"show":true,
+						"position":170,
+						"width": 180,
+						"color": "#55ee77"
+					}
+				}
+			},
+			"productlightOptions":{
+				"001": {
+					"001": {
+						"show":true,
+						"cool":150,
+						"warm":0,
+						"color": "#22dd88"
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,23 @@
+data.json
+-digital manifest
+
+currentData
+-saves the current settings for each frdg
+
+view frdg content in a webbrowser by going to 
+	localhost:3000/display?screen=1 (1-3 cases)
+
+dsl microcontrollers are dependent on a 
+public mqtt broker hosted on 
+broker.emqx.io
+username: emqx
+password: public
+clientname: ex: case01led03
+
+let's have backup MQTT local broker on the pi
+
+mqtt on pi 
+https://cedalo.com/blog/mqtt-broker-raspberry-pi-installation-guide/
+
+running mqtt server (broker?) on windows 
+https://shop.theengs.io/blogs/news/installing-mosquitto-on-windows-and-make-it-accessible-from-your-local-network?srsltid=AfmBOopBdZtwpDqOMKUGos9OA92fcsBhJqpe2TD20wK1wajaInigWJnb
