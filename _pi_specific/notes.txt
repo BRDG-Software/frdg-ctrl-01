@@ -1,0 +1,5 @@
+pi specific scripts go here
+
+frdg pi server:
+user: frdg
+pass: raspberry

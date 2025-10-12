@@ -41,12 +41,12 @@ CRGB leds[NUM_LEDS];
 bool debugPrint = true;
 
 EspMQTTClient client(
-  "BRDG-TEST-07",
+  "FRDG-TEST-07",
   "Kevlar2424",
   "broker.emqx.io",  // MQTT Broker server ip
   "emqx",            // username
   "public",   // mqtt password
-  "shelfLed03"      // Client name that uniquely identify your device
+  "case01led03"      // Client name that uniquely identify your device
 );
 int caseID  = 1;
 int shelfID = 3;
