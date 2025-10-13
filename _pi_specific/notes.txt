@@ -3,3 +3,38 @@ pi specific scripts go here
 frdg pi server:
 user: frdg
 pass: raspberry
+
+setup next.js server on the pi:
+	// installs nvm (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+	// download and install Node.js (you may need to restart the terminal)
+nvm install 20
+	// verifies the right Node.js version is in the environment
+node -v # should print `v20.15.1`
+	// verifies the right npm version is in the environment
+npm -v # should print `10.7.0`
+
+git clone https://github.com/BRDG-Software/frdg-ctrl-01
+
+npm install 
+
+npm run dev:socket
+
+
+PI MQTT Local Broker Setup
+https://cedalo.com/blog/mqtt-broker-raspberry-pi-installation-guide/
+
+- sudo apt update && sudo apt upgrade
+
+- sudo apt install -y mosquitto mosquitto-clients
+	//start mosquitto with
+- mosquitto -v
+	//restart mosquitto
+- sudo systemctl restart mosquitto
+	//change the port (from default 1883) if conflictz
+- cd /etc/mosquitto
+- sudo nano mosquitto.conf
+- add "listener 1887 0.0.0.0" to listen to all on port 1887
+	//verify port has changed
+- sudo netstat -tulnp | grep mosquitto
+

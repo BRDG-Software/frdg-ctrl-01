@@ -18,6 +18,7 @@ let's have backup MQTT local broker on the pi
 
 mqtt on pi 
 https://cedalo.com/blog/mqtt-broker-raspberry-pi-installation-guide/
+see _pi_specific/notes.txt for more information
 
 running mqtt server (broker?) on windows 
 https://shop.theengs.io/blogs/news/installing-mosquitto-on-windows-and-make-it-accessible-from-your-local-network?srsltid=AfmBOopBdZtwpDqOMKUGos9OA92fcsBhJqpe2TD20wK1wajaInigWJnb

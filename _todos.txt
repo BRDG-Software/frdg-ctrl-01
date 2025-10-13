@@ -10,6 +10,10 @@
 9. lock in content animations
 10. lock in toggle button and big menu animations
 
+-4. dsl pictolight animations
+	- rapid blink & hold
+	- pulse
+	- scroll to and blink
 -3. run the next server off the pi using git pulls to update
 -2. run the mqtt server locally on the pi 4
 -1. configure network/app to be accessable from qr code w/ captive portal 

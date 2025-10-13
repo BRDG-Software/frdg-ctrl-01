@@ -7,10 +7,24 @@ https://stackoverflow.com/questions/77528026/nextjs-app-route-api-giving-initial
 import mqtt from 'mqtt'
 export const dynamic = "force-dynamic";
 
+const mqttBroker = process.env.MQTT_BROKER
+const mqttPassword = process.env.MQTT_PASSWORD
+if ((mqttBroker === undefined) || (mqttPassword === undefined)) {
+	console.log("WARNING: mqtt undefined. shelf led will not work")
+}
+
+const client = mqtt.connect(mqttBroker, {
+		username:'emqx',
+		password:mqttPassword
+	})
+
+
+/*
 	const client = mqtt.connect('mqtt://broker.emqx.io:1883', {
 		username:'emqx',
 		password:'public'
 	})
+*/
 
 client.on('connect', () => {
    const topic = 'FRDG1/SHLV/leds'
