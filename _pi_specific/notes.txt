@@ -1,5 +1,8 @@
 pi specific scripts go here
 
+ // in kiosk mode
+ // ctrl+alt+f2 to open a terminal
+ 
 frdg pi server:
 user: frdg
 pass: raspberry
@@ -32,6 +35,7 @@ Then you have to do [ pm2 startup ] to add saved list to boot
 
 
 PI MQTT Local Broker Setup
+// needed for led control
 https://cedalo.com/blog/mqtt-broker-raspberry-pi-installation-guide/
 
 - sudo apt update && sudo apt upgrade

@@ -74,7 +74,9 @@ key="my-animated-div" // Important: Direct children of AnimatePresence must have
     <div className="
       absolute left-0 top-0
     "
-    style={{width:'1920px', height:'360px'}}
+    style={{width:'1920px', height:'360px',
+      cursor:'none'
+        }}
     >
       <div className="
         z-500

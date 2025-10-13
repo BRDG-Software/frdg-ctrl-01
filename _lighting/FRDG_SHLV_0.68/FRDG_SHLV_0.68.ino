@@ -79,6 +79,7 @@ int rgbOUT[] = {0,0,0};
 String inMSG = "001003D255000000200";
 
 void setup() {
+  client.setKeepAlive(60);
   Serial.begin(9600);
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, 300);
   process_Message();
