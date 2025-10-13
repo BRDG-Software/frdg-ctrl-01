@@ -14,7 +14,7 @@ if ((mqttBroker === undefined) || (mqttPassword === undefined)) {
 }
 
 const client = mqtt.connect(mqttBroker, {
-		username:'emqx',
+		username:'LedController',
 		password:mqttPassword
 	})
 

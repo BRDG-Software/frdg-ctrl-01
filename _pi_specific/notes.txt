@@ -20,6 +20,16 @@ npm install
 
 npm run dev:socket
 
+	//run the server with PM2
+- npm install pm2 -g
+	//start the process inside the project folder
+- pm2 start "npm run dev:socket" --attach
+See active processes: pm2 ls
+Save the process: pm2 save
+Then you have to do [ pm2 startup ] to add saved list to boot
+	//SEE THE CONSOLE READOUT
+- pm2 logs
+
 
 PI MQTT Local Broker Setup
 https://cedalo.com/blog/mqtt-broker-raspberry-pi-installation-guide/
@@ -33,8 +43,23 @@ https://cedalo.com/blog/mqtt-broker-raspberry-pi-installation-guide/
 - sudo systemctl restart mosquitto
 	//change the port (from default 1883) if conflictz
 - cd /etc/mosquitto
-- sudo nano mosquitto.conf
-- add "listener 1887 0.0.0.0" to listen to all on port 1887
-	//verify port has changed
-- sudo netstat -tulnp | grep mosquitto
+	//create new local config
+- sudo nano /conf.d/connect.conf
+- inside connect.conf
+	- listener 1883
+	- allow_anonymous true
+	//run mosquitto using the new conf file
+- mosquitto -c /etc/mosquitto/conf.d/connect.conf
 
+//\\ run this on the pi using a /home/[USER]/.config/autostart/FILNAME.desktop
+
+	//include the local broker path and password(?) in .env file
+- MQTT_BROKER="mqtt://LOCALIP:1883"
+- MQTT_PASSWORD="public"
+
+	//check if the mqtt broker is running
+- sudo ss -tulwn
+	//should show that port 1883 is listening
+
+	//subscribe to mqtt topic to see output in terminal
+- mosquitto_sub -h BROKERIP -p PORT -t FRDG/SHLV/leds

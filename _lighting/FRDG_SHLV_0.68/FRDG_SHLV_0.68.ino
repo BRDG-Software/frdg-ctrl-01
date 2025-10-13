@@ -19,7 +19,7 @@
  * subscribes to the FRDG MQTT broker
  * listens for a message, then changes lights
  * msg format:
- * [ 001        | 032     | A/T | 000      | 190       | 000 000 000 | W |                 000 000 ] 
+ * [ 001        | 032     | D/T | 000      | 190       | 000 000 000 | W |                 000 000 ] 
  *   case id      shelf id         begin led  end led     color led    warmth / modifiers   cool-warm / modifiers
  * A/T = Addressable Lights or Tuneable Lights
  * [ 003 T 000 255 255 255 255 W 000 000 ]
@@ -39,7 +39,20 @@
 CRGB leds[NUM_LEDS];
 
 bool debugPrint = true;
-
+/*
+  "mqtt://172.168.1.141",  // MQTT Broker server ip
+"172.168.1.141:1883",  // MQTT Broker server ip
+  
+*/
+EspMQTTClient client(
+  "FRDG-TEST-07",
+  "Kevlar2424",
+  "172.168.1.141",  // MQTT Broker server ip
+  "case01led03",            // username
+  "public",   // mqtt password
+  "case01led03"      // Client name that uniquely identify your device
+);
+/*
 EspMQTTClient client(
   "FRDG-TEST-07",
   "Kevlar2424",
@@ -48,6 +61,7 @@ EspMQTTClient client(
   "public",   // mqtt password
   "case01led03"      // Client name that uniquely identify your device
 );
+*/
 int caseID  = 1;
 int shelfID = 3;
 int LEDcurrent = 0;
