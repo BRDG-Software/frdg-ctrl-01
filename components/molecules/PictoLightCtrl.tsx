@@ -1,3 +1,7 @@
+/*
+each pixel on led is approx. 0.163669064"
+there is a good deal of variance here
+*/
 'use client'
 import { React, useState, useEffect } from "react";
 import Image from "next/image";
@@ -12,13 +16,11 @@ import CaseToggle from '@/components/atoms/CaseToggle'
 import SendButton from '@/components/atoms/SendButton'
 
 const PictoLightCtrl = ({selectionMade, currentShelf}) => {
-	//const [currentColor, setCurrentColor] = useState("#000000")	
-
 	const [lightOn, setLightOn] = useState(true)
 	const [lockedColor, setLockedColor] = useState("#000000")
 	const [currentColor, setCurrentColor] = useState("#000000")
-	const [lightPosition, setLightPosition] = useState("000")
-	const [lightWidth, setLightWidth] = useState("000")	
+	const [lightPosition, setLightPosition] = useState(1)
+	const [lightWidth, setLightWidth] = useState(200)	
 	
 	const [currentMenu, setCurrentMenu] = useState("")
 	const [dataFromChild, setDataFromChild] = useState("")	
@@ -30,20 +32,99 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 	const [currentCase, setCurrentCase] = useState("")
 	const [currentMsg, setCurrentMsg] = useState('001003D000279000000000W000000')
 
+	const animations = ["on", "sweep", "grow", "blink", "pulse"]
+	const [currentAnimation, setCurrentAnimation] = useState(0)
+	const [animationText, setAnimationText] = useState("on")
+	const [animationConverted, setAnimationConverted] = useState("000")
 	const [currentPosition, setCurrentPosition] = useState(150)
 	const [currentWidth, setCurrentWidth] = useState(75)
 	const [currentStart, setCurrentStart] = useState("000")
 	const [currentEnd, setCurrentEnd] = useState("255")
+	const [inchesPosition, setInchesPosition] = useState(0.125)
+	const [inchesWidth, setInchesWidth] = useState(2)
+	
+	//const [currentColor, setCurrentColor] = useState("#000000")	
+	const [currentResult, setCurrentResult] = useState("")
+	useEffect(() => {
+		///console.log(typeof(selectionMade))
+		//let selJSON = JSON.parse(selectionMade)
+		//let vally = Object.values(selJSON)
+		//console.log(vally)
+		//console.log(currentShelf)
+		getCurrentData()
+	},[])
+	
+	useEffect(() => {
+		if (currentResult !== undefined) {
+			console.log(`saved settings are ${currentResult}`)
+			let currentObj = currentResult["001"]
+			if (currentObj !== undefined) {
+				console.log(currentObj)
+				setLightPosition(currentObj.position)
+				setLightWidth(currentObj.width)
+				setCurrentColor(currentObj.color)
+				setLightOn(currentObj.show)
+			}
+//			const [lightPosition, setLightPosition] = useState(1)
+//	const [lightWidth, setLightWidth] = useState(200)	
+	
+		}
+	}, [currentResult])
 
+	const getCurrentData = async () => {
+		let selJSON = JSON.parse(selectionMade)
+		let currentValue = String(Object.values(selJSON))
+		try {
+			const msg = {
+				case:currentValue
+			}
+			const response = await fetch('/api/getcurrentdata', {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json'
+				},
+				body: JSON.stringify(msg)
+			})
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+				let result = ""
+		    result = await response.json() //.then(updateCase(result))
+		    setCurrentResult(result.pictolightOptions[currentShelf])
+		    //console.log(result.pictolightOptions)
+		  } 
+	    catch (err) {
+	      console.error('Error making GET request:', err);
+	    }
+	}
+
+	
+	const inchesFactor = 0.163669064
+	function roundyToDecimal(number, decimalPlaces) {
+ 		const factor = Math.pow(10, decimalPlaces);
+  		return Math.trunc(number * factor) / factor;
+	}
+	useEffect(() => {
+		setAnimationText(animations[currentAnimation])
+		setAnimationConverted(byteToString(currentAnimation))
+	}, [currentAnimation])
+	useEffect(() => {
+			//console.log(animationConverted)
+	}, [animationConverted])
 	useEffect(() => { 
 		//console.log(lightPosition)
 		updateSection()
+		let outty = lightPosition*inchesFactor
+		setInchesPosition(roundyToDecimal(outty,2))//*3.5)//*0.165)
 	}, [lightPosition])
 	useEffect(() => {
 		//console.log(lightWidth)
 		updateSection()
+		let outty = lightWidth*inchesFactor
+		setInchesWidth(roundyToDecimal(outty,2))//*3.5)//0.165)
 	}, [lightWidth])
-
+	
 	const updateSection = () => {
 		const center = lightWidth/2
 		const begin = lightPosition-center
@@ -58,9 +139,6 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		let beginConverted = Math.ceil( (begin < 1) ? 1: begin);
 		setCurrentEnd(byteToString(endConverted))
 		setCurrentStart(byteToString(beginConverted))
-		//console.log(`rango: ${beginConverted} , ${endConverted}`)
-		//console.log(`rango conned: ${currentStart} , ${currentEnd}`)
-
 	}
 
 	let newColor = "#000000"
@@ -79,6 +157,9 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		//console.log(`on or off? ${data}`)
 		setLightOn(data)
 	}
+	function handleChildAnimation(data) {
+		setCurrentAnimation(data)
+	}
 	function handleChildPosition(data) {
 		setLightPosition(data)
 		setCurrentPosition(data)
@@ -87,6 +168,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		setLightWidth(data)
 		setCurrentWidth(data)
 	}
+
 	function handleToggleDataFromChild(data) {
 		doMenuChange(data)
 		setBigMenuVisible(true)
@@ -147,10 +229,10 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		else if (lightOn == false) {
 			console.log('sending product light on message')
 			const nuColor = convertColor(currentColor)
-			setCurrentMsg(caseConverted + shelfConverted + "D" +
-				currentStart + currentEnd + 
-				byteToString(nuColor[0]) + byteToString(nuColor[1]) + byteToString(nuColor[2])
-				+ "W000000" )
+			//setCurrentMsg(caseConverted + shelfConverted + "D" +
+			//	currentStart + currentEnd + 
+			//	byteToString(nuColor[0]) + byteToString(nuColor[1]) + byteToString(nuColor[2])
+			//	+ "W000000" )
 		}
 	}, [lightOn])
 
@@ -158,7 +240,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		const nuColor = convertColor(currentColor) 
 		setCurrentMsg(caseConverted + shelfConverted + "D" + currentStart + currentEnd + 
 			byteToString(nuColor[0]) + byteToString(nuColor[1]) + byteToString(nuColor[2])
-			+ "W" + "000" + "000")
+			+ "W" + animationConverted + "000")
 	}
 	useEffect(() => {
 		console.log(`attempting to send led message: ${currentMsg}`)	
@@ -170,7 +252,6 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 			const msg = {
 				ledmsg:currentMsg
 			}
-			
 			const response = await fetch('/api/led', {
 				method: 'POST',
 				headers: {
@@ -191,7 +272,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 	return(
 		<div className="w-full h-full">
 			<div className="
-				w-full h-full
+				w-full h-full 
 				pt-0
 				grid grid-cols-20 
 				grid-rows-40
@@ -219,7 +300,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 				</div>
 	            <div className="
 	            	col-span-18
-	            	row-start-7
+	            	row-start-4
 	            	row-span-1
 	            	col-start-2
 	             	w-[95%] min-w-[1em] h-1 
@@ -229,7 +310,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 	            </div>
 	            <div className="
 	            	w-full 
-	            	row-start-8
+	            	row-start-5 
 	            	row-span-40
 	            	col-start-1
 	            	col-span-20
@@ -259,7 +340,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 					">
 						Section #:
 					</div>
-					<div className="
+					<div className=" 
 						col-start-16 col-span-6
 						row-start-4 row-span-4
 						w-full h-full -mt-[3vh]
@@ -277,14 +358,45 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 					</div>
 					<div className="
 						col-start-2 col-span-6
-						row-start-11
+						row-start-9
+						row-span-2
+						text-[4.6vw]
+					">Animation:
+					</div>				
+					<div className="
+						col-start-8 col-span-9
+						row-start-9
+						row-span-2
+						text-[4.6vw]
+						-pt-[0.6vh]
+					">
+						<HorizontalSlider
+							defaulty={currentAnimation}
+							minimum={0}
+							maximum={4}
+							sliderValueUp={handleChildAnimation}
+						/>
+					</div>	            
+					<div className="
+						col-start-17 col-span-4
+						row-start-8
+						mt-[1.1vh]
+						row-span-2
+						text-[4.6vw]
+						font-bold
+						text-center
+					"> {animationText}
+					</div>
+					<div className="
+						col-start-2 col-span-6
+						row-start-12
 						row-span-2
 						text-[4.6vw]
 					">Position:
 					</div>				
 					<div className="
 						col-start-8 col-span-9
-						row-start-11
+						row-start-12
 						row-span-2
 						text-[4.6vw]
 						-pt-[0.6vh]
@@ -292,19 +404,19 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 						<HorizontalSlider
 							defaulty={currentPosition}
 							minimum={1}
-							maximum={280}
+							maximum={278}
 							sliderValueUp={handleChildPosition}
 						/>
 					</div>	            
 					<div className="
 						col-start-17 col-span-4
-						row-start-10
-						mt-[1.5vh]
+						row-start-11
+						mt-[1.4vh]
 						row-span-2
 						text-[4.6vw]
 						font-bold
 						text-center
-					"> {currentPosition}px
+					"> {inchesPosition}"
 					</div>
 					<div className="
 						col-start-2 col-span-6
@@ -322,7 +434,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 						<HorizontalSlider
 							defaulty={currentWidth}
 							minimum={1}
-							maximum={280}
+							maximum={278}
 							sliderValueUp={handleChildWidth}
 						/>
 					</div>
@@ -334,7 +446,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 						text-[4.6vw]
 						font-bold
 						text-center
-					">{currentWidth}px
+					">{inchesWidth}"
 					</div>
 					<div className="
 						col-start-2 col-span-4

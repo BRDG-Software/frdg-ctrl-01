@@ -27,10 +27,14 @@ const CaseToggle = ({toggleMenu, id, name, value, selectionMade, currentMenu,
 
   const doDefault = () => {
       setCurrentItem(defaulty)
-      setInFocus(true)
+      //setInFocus(true)
+      setInFocus(true) //this gets canceled by currentMenu useffect
       setMenuOpen(false)
-    
   }
+  useEffect(() => {
+      //console.log(`in focuso? ${inFocus}`)
+      
+  },[inFocus])
   const doMenu = (value) => {
     setInFocus(true)
     setMenuOpen(true)

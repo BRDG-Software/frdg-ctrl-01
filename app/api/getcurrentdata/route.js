@@ -30,7 +30,7 @@ export async function POST(request) {
 	}
 
 	console.log(`returning current data from api request`)
-	console.log(`we received ${msgin}`)
+	console.log(`we received case ${msgin}`)
 	//return NextResponse.json( {message: 'googidee'})
 	//return new Response(`body: "coolstuff"`, {status: 200})	
 

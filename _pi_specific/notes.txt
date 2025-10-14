@@ -2,7 +2,7 @@ pi specific scripts go here
 
  // in kiosk mode
  // ctrl+alt+f2 to open a terminal
- 
+
 frdg pi server:
 user: frdg
 pass: raspberry
@@ -58,6 +58,7 @@ https://cedalo.com/blog/mqtt-broker-raspberry-pi-installation-guide/
 //\\ run this on the pi using a /home/[USER]/.config/autostart/FILNAME.desktop
 
 	//include the local broker path and password(?) in .env file
+- NEXT_PUBLIC_DB_HOST="LOCALIP"
 - MQTT_BROKER="mqtt://LOCALIP:1883"
 - MQTT_PASSWORD="public"
 

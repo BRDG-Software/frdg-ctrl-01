@@ -4,24 +4,24 @@
 		"displayType": "all"
 	},
 	"pictolightOptions" : {
-		"001":{
+		"003":{
 			"001": {
 				"show":true,
-				"position":170,
-				"width": 180,
-				"color": "#55ee77"
+				"position":278,
+				"width": 278,
+				"color": "#22dd77"
 			},
 			"002": {
 				"show":true,
-				"position":170,
-				"width": 180,
-				"color": "#55ee77"
+				"position":70,
+				"width": 14,
+				"color": "#33ee77"
 			},
 			"003": {
 				"show":true,
-				"position":170,
-				"width": 180,
-				"color": "#55ee77"
+				"position":278,
+				"width": 278,
+				"color": "#53ee77"
 			}
 		}
 	},
