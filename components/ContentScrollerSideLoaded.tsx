@@ -122,7 +122,7 @@ const ContentScrollerSideLoaded = ({image, routeRules, hideSideLoader, isSample}
     lowered: {
       x: -50, 
       transition: { 
-        duration: .5,
+        duration: .5, //orig 0.5
         ease: [0.72, -0.006, 0.659, 0.552]
       }
     }
@@ -273,7 +273,7 @@ const ContentScrollerSideLoaded = ({image, routeRules, hideSideLoader, isSample}
   const [currentImageA, setCurrentImageA] = useState(currentImage)
   const [currentImageB, setCurrentImageB] = useState(currentImage)
 
-  const noFly = ['walmart', 'kraft', 'storebranded']
+  const noFly = ['walmart', 'kraft', 'storebranded', 'tyson']
 
     //change the key of the framescroller before bringing it in to remount the component
     //and reset its animation timers

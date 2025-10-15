@@ -16,7 +16,7 @@ const VideoSelectables = ({imgRules, processedImgUrls, currentScreen}) => {
 	const [room, setRoom] = useState("123")
 	const [userName, setUserName] = useState(userBuilt)
 	const [joined, setJoined] = useState(false)
-
+	console.log(currentScreen)
 	let dataArray = []
 	
 	const datain = data.contentRoutes

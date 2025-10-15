@@ -29,7 +29,7 @@ const ToggleSwitch = ({toggleValueUp, defaulty}) => {
 		>
 			<label className={styles.switch}>
 			 <input type="checkbox"
-			 	defaultChecked={true}
+			 	defaultChecked={defaulty}
 			 	onChange={toggleChange()}
 			 />
 			 <span className={`${styles.slider} ${styles.round}`}></span>

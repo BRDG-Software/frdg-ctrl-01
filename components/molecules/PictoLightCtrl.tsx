@@ -25,7 +25,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 	const [currentMenu, setCurrentMenu] = useState("")
 	const [dataFromChild, setDataFromChild] = useState("")	
 	const [bigMenuVisible, setBigMenuVisible] = useState(false)
-	const [currentSection, setCurrentSection] = useState("")
+	const [currentSection, setCurrentSection] = useState("001")
 	const [resetSection, setResetSection] = useState()
 	const [colorFromChild, setColorFromChild] = useState('')
 	//const [currentShelf, setCurrentShelf] = useState("")
@@ -42,6 +42,8 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 	const [currentEnd, setCurrentEnd] = useState("255")
 	const [inchesPosition, setInchesPosition] = useState(0.125)
 	const [inchesWidth, setInchesWidth] = useState(2)
+			//changing this value will force the horizontal sliders to re-render
+	const [renderKey, setRenderKey] = useState(Math.random())
 	
 	//const [currentColor, setCurrentColor] = useState("#000000")	
 	const [currentResult, setCurrentResult] = useState("")
@@ -54,22 +56,36 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		getCurrentData()
 	},[])
 	
+	const updateFromSaved = (objecty) => {
+				let readout = JSON.stringify(objecty)
+				console.log(`saved shelf sections settings: ${JSON.stringify(objecty)}`)
+				setLightPosition(objecty.position)
+				setCurrentPosition(objecty.position)
+				setLightWidth(objecty.width)
+				setCurrentWidth(objecty.width)
+				setCurrentColor(objecty.color)
+				setLightOn(objecty.show)
+				setCurrentAnimation(objecty.animation)
+				setRenderKey(Math.random())		
+	}
+	useEffect(() => {
+		if (currentResult !== undefined) {
+			//console.log(`saved settings are ${currentResult}`)
+			let currentObj = currentResult["001"]
+			if (currentObj !== undefined) {
+				updateFromSaved(currentObj)				
+			}	
+		}
+	}, [currentResult])
 	useEffect(() => {
 		if (currentResult !== undefined) {
 			console.log(`saved settings are ${currentResult}`)
-			let currentObj = currentResult["001"]
+			let currentObj = currentResult[currentSection]
 			if (currentObj !== undefined) {
-				console.log(currentObj)
-				setLightPosition(currentObj.position)
-				setLightWidth(currentObj.width)
-				setCurrentColor(currentObj.color)
-				setLightOn(currentObj.show)
-			}
-//			const [lightPosition, setLightPosition] = useState(1)
-//	const [lightWidth, setLightWidth] = useState(200)	
-	
+				updateFromSaved(currentObj)
+			}	
 		}
-	}, [currentResult])
+	}, [currentSection])
 
 	const getCurrentData = async () => {
 		let selJSON = JSON.parse(selectionMade)
@@ -91,6 +107,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 			}
 				let result = ""
 		    result = await response.json() //.then(updateCase(result))
+		    //console.log(`gathered result: ${result.pictolightOptions}`)
 		    setCurrentResult(result.pictolightOptions[currentShelf])
 		    //console.log(result.pictolightOptions)
 		  } 
@@ -235,16 +252,22 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 			//	+ "W000000" )
 		}
 	}, [lightOn])
+	const [senderRand,setSenderRand] = useState(0)
 
 	const burstMessage = () => {
 		const nuColor = convertColor(currentColor) 
 		setCurrentMsg(caseConverted + shelfConverted + "D" + currentStart + currentEnd + 
 			byteToString(nuColor[0]) + byteToString(nuColor[1]) + byteToString(nuColor[2])
 			+ "W" + animationConverted + "000")
+		setSenderRand(Math.random())
 	}
 	useEffect(() => {
-		console.log(`attempting to send led message: ${currentMsg}`)	
 		sendMessage()
+	},[ senderRand])
+
+	useEffect(() => {
+		//console.log(`attempting to send led message: ${currentMsg}`)	
+		//sendMessage()
 	},[currentMsg])
 
 	const sendMessage = async () => {
@@ -330,6 +353,8 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 						row-span-3
 					">
 						<ToggleSwitch
+							key={renderKey+7}
+							defaulty={lightOn}
 							toggleValueUp={handleOnOffToggle}
 						/>
 					</div>
@@ -371,6 +396,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 						-pt-[0.6vh]
 					">
 						<HorizontalSlider
+							key={renderKey+1}
 							defaulty={currentAnimation}
 							minimum={0}
 							maximum={4}
@@ -402,6 +428,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 						-pt-[0.6vh]
 					">
 						<HorizontalSlider
+							key={renderKey+3}
 							defaulty={currentPosition}
 							minimum={1}
 							maximum={278}
@@ -432,6 +459,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 						text-[51px]
 					">	
 						<HorizontalSlider
+							key={renderKey+5}
 							defaulty={currentWidth}
 							minimum={1}
 							maximum={278}

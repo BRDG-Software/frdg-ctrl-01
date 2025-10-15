@@ -1,4 +1,11 @@
 /*
+if screen is ALL:
+  content will be grabbed from 
+  /public/img/screenNUMBER/selection/frame1-x.png
+if screen has a number (screen1, screen2, etc):
+  content will be grabbed from 
+  /public/imgSingle/screenNUMBER/selection/frame1-x.png
+
 motion bezier curve tool
 https://motion.dev/studio
 */
@@ -121,8 +128,11 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
     lowered: {
       y: 0, 
       transition: { 
-        duration: .5,
-        ease: [0.72, -0.006, 0.659, 0.552]
+        duration: 1.5, //orig 0.5
+        //ease: [0.123, 0.358, 0.132, 0.848]
+        ease: [0.335, 0.33, 0.153, 0.515]
+        //ease: [0.102, 0.624, 0, 0.933]
+        //ease: [0.72, -0.006, 0.659, 0.552]
       }
     }
   }
@@ -142,7 +152,7 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
   const [currentAnimation, setCurrentAnimation] = useState(animationSlidedown)
     // end animationz
   
-  const animDelay = 400
+  const animDelay = 400 //orig 400
   
   const doZResetRef = useRef(null)
   const vidAinRef = useRef(null)
@@ -158,49 +168,50 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
     doZResetRef.current = setTimeout(() => {
       setVidAzindex(0)
       setVidBzindex(0)
-    }, animDelay+150)
+      console.log("doing Z reset")
+    }, animDelay+1400) //orig 150
   }
   const vidAin = () => {
     if (vidAinRef.current) {
       clearTimeout(vidAinRef.current)
     }
     vidAinRef.current = setTimeout(() => {
-      loggit("now bring video A in ")
+      console.log("now bring video A in ")
       setVidAvisible(true)
       setVidAzindex(200)
       vidBout()
       doZreset()
-    }, animDelay) //+50)
+    }, 10)//animDelay) //+50)
   }
   const vidBin = () => {
     if (vidBinRef.current) {
       clearTimeout(vidBinRef.current)
     }
     vidBinRef.current = setTimeout(() => {
-      loggit("now bring video B in ")
+      console.log("now bring video B in ")
       setVidBvisible(true)
       setVidBzindex(200)
       doZreset()
       vidAout()
-    }, animDelay) //+50)
+    }, 10)//animDelay) //+50)
   }
   const vidAout = () => {
     if (vidAoutRef.current) {
       clearTimeout(vidAoutRef.current)
     }
     vidAoutRef.current = setTimeout(() => {
-      loggit("video A leaving ")
+      console.log("video A leaving ")
       setVidAvisible(false)
-    }, animDelay+100)
+    }, animDelay+1200) //orig 100
   }
   const vidBout = () => {
     if (vidBoutRef.current) {
       clearTimeout(vidBoutRef.current)
     }
     vidBoutRef.current = setTimeout(() => {
-      loggit("video B leaving ")
+      console.log("video B leaving ")
       setVidBvisible(false)
-    }, animDelay+100)
+    }, animDelay+1200)
   }
 
   const cancelTimeoutz = () => {
@@ -301,12 +312,11 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
               if (currentImage != "walmart") {
                   tellParentHideSideLoader("hide side loader now")
               }
-              if ((screeny != "all") &&
-                ((currentImage == "kraft") || (currentImage == "storebranded"))){
+              if (screeny != "all") {
                 prefix = "/imgSingle/"
               }
               let imgSRC = prefix+screenCurrent+"/"+currentImage+"/frame1.png"
-              
+              console.log(imgSRC)
               if (mixer == 0) {
                   //console.log(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
                   //setVidurlB(prefix+screenCurrent+"/"+currentImage+"/frame1.png")

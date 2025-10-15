@@ -9,14 +9,20 @@
 			},
 			"kraft": {
 				"title":"Vendor Ad - Kraft Singles",
-				"animate":true,
-				"frames":2,
+				"animate":false,
+				"frames":1,
 				"icons":"/imgIcon/all/kraft/frame1.png"
+			},
+			"tyson": {
+				"title":"Vendor Ad - Tyson Foods",
+				"animate":false,
+				"frames":1,
+				"icons":"/imgIcon/all/tyson/frame1.png"
 			},
 			"storebranded":{
 				"title":"Store Ad - Horizon Organic",
-				"animate":true,
-				"frames":2,
+				"animate":false,
+				"frames":1,
 				"icons":"/imgIcon/all/storebranded/frame1.png"
 			},
 			"elp": {

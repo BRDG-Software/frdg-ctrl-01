@@ -69,11 +69,11 @@ const FrameScroller = ({screen, image, prefixo, routeRules, imgWidth, sideloader
 		lowered: {
 		  y: 0, 
 		  opacity: 1.0, 
-		  transition: { duration: 0.5}
+		  transition: { duration: 1.5}
 		}
 	}
 	const [currentAnimation, setCurrentAnimation] = useState(animationFaded)
-	const animDelay = 500
+	const animDelay = 1000
 
 	const doZResetRef = useRef(null)
 	const vidAinRef = useRef(null)
