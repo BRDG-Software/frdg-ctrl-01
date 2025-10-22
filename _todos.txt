@@ -1,21 +1,35 @@
--1. memory api built out
+
+todo:
 0. shelf pictolight menu 
+0.5. setup video mixing timing variables
 1. content locked in 
 2. case display content sized properly
-3. case display nested scrolling
 4. case display scroll wheel
 5. debugging big menus
+5.5. debug toggle saving issue
 8. big menu animations
 9. lock in content animations
 10. lock in toggle button and big menu animations
+12. bulletproofing
+
+
+done:
+-1. memory api built out
+-2. setup app on github
+3. case display nested scrolling
 
 -4. dsl pictolight animations
 	- rapid blink & hold
 	- pulse
 	- scroll to and blink
--1. configure network/app to be accessable from qr code w/ captive portal 
+-3. run the next server off the pi using git pulls to update
+-2. run the mqtt server locally on the pi 4
 0. lock in router + switch config and setup network
+
 1. setup pi 5s and pi 4 with teamviewer
+2. setup up pi 4 with github pull and auto run scripts
+3. setup pi 5s with auto launch chromium scripts
+
 4. prepare every dsl board
 5. flash every dsl board with corresponding arduino code
 	- correct mqtt broker
@@ -24,13 +38,6 @@
 	- unique MQTT clientname
 	- L A B E L every dsl board 
 
-
-
-
-done:
--2. setup app on github
-
--3. run the next server off the pi using git pulls to update
--2. run the mqtt server locally on the pi 4
-2. setup up pi 4 with github pull and auto run scripts
-3. setup pi 5s with auto launch chromium scripts
+shelved:
+-1. configure network/app to be accessable from qr code w/ captive portal 
+	reason: captive portal requires additional wifi router to be configured as hotspot

@@ -1,6 +1,11 @@
+import * as dotenv from 'dotenv'
+dotenv.config({ path: '.env'})
 import {createServer} from "node:http";
 import next from "next";
 import {Server} from "socket.io";
+
+
+console.log(process.env.NEXT_PUBLIC_DB_HOST)
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = process.env.HOSTNAME || "localhost";

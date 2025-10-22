@@ -2,7 +2,7 @@
 
 //export const dynamic = "force-dynamic";
 //import mqtt from 'mqtt'
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image";
 
 import { convertColor, mapRange, byteToString, getRandomInt } from '@/utils/utils.js'
@@ -17,6 +17,12 @@ import CaseToggle from '@/components/atoms/CaseToggle'
 const ProductLightCtrl = ({selectionMade}) => {
 		//the ip of the pi to send led change requests to 
 	const server_ip = process.env.NEXT_PUBLIC_DB_HOST
+
+		//on render, set a timer to wait for settings to load,
+		//before sending messages or updating data
+	const [loaded, setLoaded] = useState(false)
+	const loadTimerRef = useRef(null)
+	const loadingTime = 1000
 
 	const [lightOn, setLightOn] = useState(false)
 	const [defaultLightOn, setDefaultLightOn] = useState(false)
@@ -37,10 +43,10 @@ const ProductLightCtrl = ({selectionMade}) => {
 	const [resetShelf, setResetShelf] = useState()
 	const [currentMenu, setCurrentMenu] = useState("productlightShelfOptions")
 	const [bigMenuVisible, setBigMenuVisible] = useState(false)
-	const [currentShelf, setCurrentShelf] = useState("")
+	const [currentShelf, setCurrentShelf] = useState("001")
 	const [currentCase, setCurrentCase] = useState("")
 	const [currentValue, setCurrentValue] = useState("001")
-
+	const [renderKey, setRenderKey] = useState(0)
 	let newColor = "#000000"
 	const colorChange = (event) => {
 		newColor = event.target.value
@@ -64,11 +70,11 @@ const ProductLightCtrl = ({selectionMade}) => {
 	useEffect(() => {
 		//console.log(`light on: ${lightOn}`)
 		if (lightOn == true) {
-			console.log('sending product light off message')
+			//console.log('sending product light off message')
 			setCurrentMsg(caseConverted + shelfConverted + 'T000255000000000W000000')
 		}
 		else if (lightOn == false) {
-			console.log('sending product light on message')
+			//console.log('sending product light on message')
 			const nuColor = convertColor(currentColor)
 			setCurrentMsg(caseConverted + shelfConverted + "T000255" + 
 				byteToString(nuColor[0]) + byteToString(nuColor[1]) + byteToString(nuColor[2])
@@ -102,19 +108,25 @@ const ProductLightCtrl = ({selectionMade}) => {
 		//console.log(`on or off? ${data}`)
 		setLightOn(data)
 	}
-
 	function handleShelfToggleDataFromChild(data) {
 		doMenuChange(data)
 		setBigMenuVisible(true)
 	}
 	function handleShelfDataFromChild(data) {
+	    //console.log(`shelfy data: ${data}`)
 	    setShelfDataFromChild(data)
 	    let datajson = JSON.parse(data)
 	    //console.log(datajson.pictolightShelfOptions)
-	    setCurrentShelf(datajson.productlightShelfOptions)
+	    if (datajson.productlightShelfOptions == "CANOPY") {
+	    	setCurrentShelf("006")
+	    }
+	    else {
+	    	setCurrentShelf(datajson.productlightShelfOptions)
+	    }
 	    setBigMenuVisible(false)
-	    //setShelvesVisible(true)
-	    //setShelfName("Shelf Product Light")
+
+		setLoaded(false)
+		loadTimer()
 	 }
 	const doMenuChange = (menuChange) => {
 		setCurrentMenu(menuChange)
@@ -122,13 +134,30 @@ const ProductLightCtrl = ({selectionMade}) => {
 	const killMenu = () => {
 		setBigMenuVisible(false)
 	}
+
+	useEffect(() => {
+		//console.log(`on load our selectionMade: ${selectionMade}`)
+		getCurrentData()
+		loadTimer()
+	},[])
+
+	const loadTimer = () => {
+		if (loadTimerRef.current) {
+			clearTimeout(loadTimerRef.current)
+			loadTimerRef.current = null
+		}
+		loadTimerRef.current = setTimeout(() => {
+			console.log("loading done")
+			setLoaded(true)
+		}, loadingTime)
+	}
+
 	useEffect(() => {
 		const selecty = JSON.parse(selectionMade)
 		setCurrentValue(Object.values(selecty))
-		getCurrentData()
+		//console.log(`selecty made says selectionMade: ${selectionMade}`)
+		//getCurrentData()
 
-		//if we select a different case, refresh the page
-		//console.log("RELOADIT")
 		setShelfDataFromChild("")
 		//setShelvesVisible(false)
 		//setShelfName("Product Light")
@@ -142,7 +171,6 @@ const ProductLightCtrl = ({selectionMade}) => {
 		setCurrentCase(casein.productlightOptions)
 	}
 
-
 	const [caseConverted, setCaseConverted] = useState("001")
 	const [shelfConverted, setShelfConverted] = useState("001")
 	useEffect(() => {
@@ -151,34 +179,31 @@ const ProductLightCtrl = ({selectionMade}) => {
 		}
 		else {setCaseConverted(currentCase)}
 	}, [currentCase])
-	useEffect(() => {
-		if (currentShelf == "ALL"){
-			setShelfConverted("255")
-		}
-		else {setShelfConverted(currentShelf)}
-	}, [currentShelf])
 
 	const burstMessage = async() => {
-		const nuColor = convertColor(currentColor)
-		setCurrentMsg(caseConverted + shelfConverted + "T000255" + 
-			byteToString(nuColor[0]) + byteToString(nuColor[1]) + byteToString(nuColor[2])
-			+ "W" + coolTemp + warmTemp)
-		console.log(`attempting to send led message: ${currentMsg}`)
+			const nuColor = convertColor(currentColor)
+			setCurrentMsg(caseConverted + shelfConverted + "T000255" + 
+				byteToString(nuColor[0]) + byteToString(nuColor[1]) + byteToString(nuColor[2])
+				+ "W" + coolTemp + warmTemp)
+			console.log(`attempting to send led message: ${currentMsg}`)
+		
 	}
 
 	useEffect(() => {
-		console.log(`current product light message: ${currentMsg}`)
-			// send the led message as api request 
-		sendMessage()
-
-		//updateCurrentData()
-		//getCurrentData()
+		if (loaded == true) {
+			console.log(`current product light message: ${currentMsg}`)
+				// send the led message as api request 
+			console.log('attempting to send light message')
+			sendMessage()
+		}
 	}, [currentMsg])
 
 	const [currentResult, setCurrentResult] = useState("")
 
 		//get the current saved choices to display
 	const getCurrentData = async () => {
+		let selJSON = JSON.parse(selectionMade)
+		let currentValue = String(Object.values(selJSON))		
 		try {
 			const msg = {
 				case:currentValue
@@ -202,52 +227,121 @@ const ProductLightCtrl = ({selectionMade}) => {
 	      console.error('Error making GET request:', err);
 	    }
 	}
+
+	const [currentDatas, setCurrentDatas] = useState({})
+
+	const updateCurrentData = async () => {
+		let tempUpdateData = {}
+		let tempDataCombined = {}
+		let tempDataFinal = {}
+		if (loaded == true) {
+			/*
+			console.log(`shelf ${currentShelf}`)
+			console.log({lightOn})
+			console.log({lightTemp})
+			console.log({lightBrightness})
+			console.log({currentColor})
+			*/
+			/*
+			if (currentDatas !== undefined) {
+			console.log(`previous saved current datas: ${JSON.stringify(currentDatas)}`)
+			}
+			*/
+			tempUpdateData["currentShelf"] = currentShelf
+			tempUpdateData[currentShelf] = {
+				lightOn: lightOn,
+				sliderTemp: lightTemp,
+				lightBrightness: lightBrightness,
+				currentColor: currentColor
+			}
+			//console.log(`new data will be ${JSON.stringify(tempUpdateData)}`)
+			tempDataCombined[Object.keys(JSON.parse(selectionMade))] = tempUpdateData
+			tempDataFinal[Object.values(JSON.parse(selectionMade))] = tempDataCombined
+			console.log(`new data will be ${JSON.stringify(tempDataFinal)}`)
+			
+			try {
+				const response = await fetch('/api/updatecurrentdata', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(tempDataFinal)
+				})
+
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+					//let result = ""
+			    const result = await response.json() //.then(updateCase(result))
+			    //console.log(result)
+			    //setCurrentResult(result)
+			  } 
+		    catch (err) {
+		      console.error('Error making POST request:', err);
+		    }
+		}
+	}
+	let tempDatas = {}
+
 	useEffect(() => {
 		if (currentResult !== undefined) {
 			const savedSettings = currentResult.productlightOptions
+			//console.log(JSON.stringify(currentResult.productlightOptions))
 			if (savedSettings !== undefined) {
-				console.log(savedSettings.currentShelf)
-				console.log(savedSettings[savedSettings.currentShelf])
+				//console.log(`current shelf: ${savedSettings.currentShelf}`)
+				//console.log(`current shelf settings: ${JSON.stringify(savedSettings[savedSettings.currentShelf])}`)
 				const setty = savedSettings[savedSettings.currentShelf]
-				
-				setCurrentShelf(setty.currentShelf)
-				setSliderTemp(setty.sliderTemp)
-				setLightBrightness(setty.lightBrightness)
-				setCurrentColor(setty.currentColor)
-				setLightOn(setty.lightOn)
-				setDefaultLightOn(setty.lightOn)
-				
+				if (setty !== undefined) {
+					//console.log(`setty says ${setty.currentShelf}`)
+					setCurrentShelf(savedSettings.currentShelf)
+					//setSliderTemp(setty.sliderTemp)
+					//setLightBrightness(setty.lightBrightness)
+					//setCurrentColor(setty.currentColor)
+					//setLightOn(setty.lightOn)
+					//setDefaultLightOn(setty.lightOn)
+					setRenderKey(getRandomInt(1,9999))
+					tempDatas[Object.values(JSON.parse(selectionMade))] = {
+						productlightOptions : currentResult.productlightOptions
+						}
+					setCurrentDatas(tempDatas)
+					//console.log(Object.values(JSON.parse(selectionMade)))
+					//setCurrentDatas(tempDatas)
+					//currentDatas[Object.values(JSON.parse(selectionMade))] = {
+					//	productlightOptions : currentResult.productlightOptions
+					//	}
+					//console.log(`currentDatas: ${JSON.stringify(currentDatas)}`)
+					}
+				}
+			}
+	}, [currentResult])
+	
+	useEffect(() => {
+		if (currentShelf == "ALL"){
+			setShelfConverted("255")
+		}
+		else {setShelfConverted(currentShelf)}
+
+		if (currentResult !== undefined) {
+			const savedSettings = currentResult.productlightOptions
+			if (savedSettings !== undefined) {
+				//console.log(`current shelf: ${currentShelf}`)
+				//console.log(`current shelf settings: ${JSON.stringify(savedSettings[currentShelf])}`)
+				const setty = savedSettings[currentShelf]
+				if (setty !== undefined) {
+					//console.log(`setty says ${setty.currentShelf}`)
+					//setCurrentShelf(savedSettings.currentShelf)
+					setSliderTemp(setty.sliderTemp)
+					setLightTemp(setty.sliderTemp)
+					setLightBrightness(setty.lightBrightness)
+					setCurrentColor(setty.currentColor)
+					setLightOn(setty.lightOn)
+					setDefaultLightOn(setty.lightOn)
+					//setResetShelf(getRandomInt(1,9999))
+					setRenderKey(getRandomInt(1,9999))
+				}
 			}
 		}
-	}, [currentResult])
-
-	const updateCurrentData = async () => {
-		try {
-			const msg = {
-				datatoupdate:"some cool stuff"
-			}
-			
-			const response = await fetch('/api/updatecurrentdata', {
-				method: 'POST',
-				headers: {
-					'content-type': 'application/json'
-				},
-				body: JSON.stringify(msg)
-			})
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-		      const result = response//await response.json();
-		      //setResponseData(result);
-		      //console.log(result)
-		      //setError(null); // Clear any previous errors
-	    } 
-	    catch (err) {
-	      console.error('Error making POST request:', err);
-	      //setError(err.message);
-	      //setResponseData(null); // Clear any previous data
-	    }
-	}
+	}, [currentShelf])
 
 	const sendMessage = async () => {
 		//const nuColor = convertColor(currentColor)
@@ -292,6 +386,8 @@ const ProductLightCtrl = ({selectionMade}) => {
 		      //setResponseData(result);
 		      //console.log(result)
 		      //setError(null); // Clear any previous errors
+		      	//upon success, update the currentData
+		      updateCurrentData()
 	    } 
 	    catch (err) {
 	      console.error('Error making POST request:', err);
@@ -312,6 +408,7 @@ const ProductLightCtrl = ({selectionMade}) => {
 				left-[72vw]
 			">
 				<CaseToggle
+					key={renderKey+3}
 					toggleMenu={handleShelfToggleDataFromChild}
 					name={"Shelf #"}
 					value={"productlightShelfOptions"}
@@ -319,6 +416,7 @@ const ProductLightCtrl = ({selectionMade}) => {
 					currentMenu={currentMenu}
 					bigMenuVisible={bigMenuVisible}
 					reseitit={resetShelf}
+					defaulty={currentShelf}
 				/>
 			</div>
 			<div className="
@@ -340,25 +438,28 @@ const ProductLightCtrl = ({selectionMade}) => {
 					row-span-3
 				">
 					<ToggleSwitch
+						key={renderKey+1}
 						defaulty={defaultLightOn}
 						toggleValueUp={handleOnOffToggle}
 					/>
 				</div>
 				<div className="
 					col-start-2 col-span-6
-					row-start-6
+					row-start-7
 					row-span-2
+					-mt-[1vh]
 					text-[4.6vw]
 				">Light Temp:
 				</div>
 				<div className="
 					col-start-8 col-span-9
-					row-start-6
+					row-start-7
 					row-span-2
 					text-[4.6vw]
 					-pt-[0.6vh]
 				">
 					<HorizontalSlider
+						key={renderKey+5}
 						sliderValueUp={handleChildTemp}
 						defaulty={lightTemp}
 						minimum={-255}
@@ -383,8 +484,9 @@ const ProductLightCtrl = ({selectionMade}) => {
 				</div>
 				<div className="
 					col-start-17 col-span-4
-					row-start-6
+					row-start-7
 					row-span-2
+					-mt-[1vh]
 					text-[4.6vw]
 					font-bold
 					text-center
@@ -395,6 +497,7 @@ const ProductLightCtrl = ({selectionMade}) => {
 					col-start-2 col-span-6
 					row-start-10
 					row-span-2
+					-mt-[1vh]
 					text-[4.6vw]
 				">Brightness:
 				</div>
@@ -405,6 +508,7 @@ const ProductLightCtrl = ({selectionMade}) => {
 					text-[3.6vw]
 				">	
 					<HorizontalSlider
+						key={renderKey+9}
 						sliderValueUp={handleChildBrightness}
 						defaulty={lightBrightness}
 					/>
@@ -413,6 +517,7 @@ const ProductLightCtrl = ({selectionMade}) => {
 					col-start-17 col-span-4
 					row-start-10
 					row-span-2
+					-mt-[1vh]
 					text-[4.6vw]
 					font-bold
 					text-center

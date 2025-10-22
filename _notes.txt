@@ -22,3 +22,12 @@ see _pi_specific/notes.txt for more information
 
 running mqtt server (broker?) on windows 
 https://shop.theengs.io/blogs/news/installing-mosquitto-on-windows-and-make-it-accessible-from-your-local-network?srsltid=AfmBOopBdZtwpDqOMKUGos9OA92fcsBhJqpe2TD20wK1wajaInigWJnb
+
+in orde to do a captive portal, we'd have to setup another router as a hotspot
+https://wiki.teltonika-networks.com/view/Connecting_to_a_Hotspot_WiFi_for_Internet_Connectivity
+
+wifi qr gen
+https://qifi.org/
+https://wifiqrcode.com/locale/en/
+qr gen
+https://qrcode.tec-it.com/en

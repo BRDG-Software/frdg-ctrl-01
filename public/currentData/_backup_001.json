@@ -1,0 +1,263 @@
+{
+	"displayOptions" : {
+		"currentContent": "kraft",
+		"displayType": "all"
+	},
+	"pictolightOptions" : {
+		"005":{
+			"001": {
+				"show":true,
+				"position":50,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"002": {
+				"show":true,
+				"position":180,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"003": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"ALL": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			}
+		},
+		"004":{
+			"001": {
+				"show":true,
+				"position":50,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"002": {
+				"show":true,
+				"position":180,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"003": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"ALL": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			}
+		},
+		"003":{
+			"001": {
+				"show":false,
+				"position":75,
+				"width": 75,
+				"color": "#0000ff",
+				"animation":3
+			},
+			"002": {
+				"show":true,
+				"position":180,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"003": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"ALL": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			}
+		},
+		"002":{
+			"001": {
+				"show":false,
+				"position":200,
+				"width": 200,
+				"color": "#00ff00",
+				"animation":1
+			},
+			"002": {
+				"show":true,
+				"position":180,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"003": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"ALL": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			}
+		},
+		"001":{
+			"001": {
+				"show":true,
+				"position":50,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"002": {
+				"show":false,
+				"position":250,
+				"width": 250,
+				"color": "#00ff00",
+				"animation":1
+			},
+			"003": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"ALL": {
+				"show":true,
+				"position":1,
+				"width": 1,
+				"color": "#ffffff",
+				"animation":1
+			}
+		},
+		"000":{
+			"001": {
+				"show":true,
+				"position":50,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"002": {
+				"show":true,
+				"position":180,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"003": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"ALL": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			}
+		},
+		"ALL":{
+			"001": {
+				"show":true,
+				"position":50,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"002": {
+				"show":true,
+				"position":180,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"003": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			},
+			"ALL": {
+				"show":true,
+				"position":250,
+				"width": 50,
+				"color": "#ff0000",
+				"animation":3
+			}
+		}
+	},
+	"productlightOptions":{
+		"currentShelf":"002",
+		"001": {
+			"lightOn":false,
+			"sliderTemp":-255,
+			"lightBrightness":1,
+			"currentColor": "#000000"
+		},
+		"002": {
+			"lightOn":true,
+			"sliderTemp":255,
+			"lightBrightness":255,
+			"currentColor": "#ffffff"
+		},
+		"003": {
+			"lightOn":true,
+			"sliderTemp":150,
+			"lightBrightness":80,
+			"currentColor": "#22dd88"
+		},
+		"004": {
+			"lightOn":true,
+			"sliderTemp":150,
+			"lightBrightness":80,
+			"currentColor": "#22dd88"
+		},
+		"005": {
+			"lightOn":true,
+			"sliderTemp":150,
+			"lightBrightness":80,
+			"currentColor": "#22dd88"
+		},
+		"006": {
+			"lightOn":true,
+			"sliderTemp":150,
+			"lightBrightness":80,
+			"currentColor": "#22dd88"
+		},
+		"ALL": {
+			"lightOn":true,
+			"sliderTemp":-255,
+			"lightBrightness":1,
+			"currentColor": "#000000"
+		}		
+	}
+}

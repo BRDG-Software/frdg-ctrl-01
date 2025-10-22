@@ -69,7 +69,8 @@ const CaseToggle = ({toggleMenu, id, name, value, selectionMade, currentMenu,
     }
   }, [resetit])
   useEffect(() => {
-    setCurrentSelection(selectionMade)
+      setCurrentSelection(selectionMade)
+    
     //doSelectionCheck()
     /*
     if (selectionMade !== "") {
@@ -95,11 +96,14 @@ const CaseToggle = ({toggleMenu, id, name, value, selectionMade, currentMenu,
     if (currentSelection !== "") {
       let selParsed = JSON.parse(currentSelection)
       if (selParsed.hasOwnProperty(value)) {
-        //console.log("do a thing!")
-        //setInFocus(true)
-        setMenuOpen(false)
-        setCurrentItem(selParsed[value])
-
+        if (selParsed[value] == "CANOPY") {
+          setMenuOpen(false)
+          setCurrentItem("CNPY")
+        }
+        else {
+          setMenuOpen(false)
+          setCurrentItem(selParsed[value])
+        }
       }
       else {
         //setInFocus(false)

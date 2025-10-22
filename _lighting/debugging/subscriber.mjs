@@ -6,17 +6,17 @@
 
 import fs from 'fs'
 import mqtt from 'mqtt'
-
+/*
 const options = {
 	protocol: 'mqtt',
 	host: '172.168.1.141',
 	port: '1883',
 	client_id: 'uniquo-client-boyo-69',
-	username:'frigito',
+	username:'frigito-subscribo',
 	password:'public'
 }
+*/
 
-/*
 const options = {
 	protocol: 'mqtt',
 	host: 'broker.emqx.io',
@@ -25,7 +25,7 @@ const options = {
 	username : 'emqx',
 	password : 'public'
 }
-*/
+
 const client = mqtt.connect(options)
 const topic = 'FRDG1/SHLV/leds'
 

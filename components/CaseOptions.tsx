@@ -17,7 +17,6 @@ const CaseOptions = ({ selectionMade }) => {
 	
 	useEffect(() => {
 		if (selectionMade !== "") {
-
 			let selParsed = JSON.parse(selectionMade)
 			 Object.values(selParsed).forEach(value => {
 			 		setCurrentSelection(value)
@@ -63,7 +62,7 @@ const CaseOptions = ({ selectionMade }) => {
 			
 		
 			<div className="
-				w-full 
+				w-full
 				h-screen
 				absolute
 				top-[24vh]

@@ -112,9 +112,9 @@ const ContentScrollerSideLoaded = ({image, routeRules, hideSideLoader, isSample}
   }
   const animationSlidedown =  {
     raised: {
-      x: 1920,  //-400
+      x: 1200,  //-400
       transition: {
-        duration: .5,
+        duration: 1.0,
         ease: [0.72, -0.006, 0.659, 0.552]        
        }
       //transition: { duration: 0.0 }
@@ -122,7 +122,7 @@ const ContentScrollerSideLoaded = ({image, routeRules, hideSideLoader, isSample}
     lowered: {
       x: -50, 
       transition: { 
-        duration: .5, //orig 0.5
+        duration: 1.5, //orig 0.5
         ease: [0.72, -0.006, 0.659, 0.552]
       }
     }

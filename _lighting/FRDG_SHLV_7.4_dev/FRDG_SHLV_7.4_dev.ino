@@ -64,6 +64,7 @@ bool debugPrint = true;
 "172.168.1.141:1883",  // MQTT Broker server ip
   
 */
+/*
 EspMQTTClient client(
   "FRDG-TEST-07",
   "Kevlar2424",
@@ -72,8 +73,18 @@ EspMQTTClient client(
   "public",   // mqtt password
   "case03led04"      // Client name that uniquely identify your device
 );
-int caseID  = 3;
-int shelfID = 4;
+*/
+int caseID  = 1;
+int shelfID = 3;
+
+EspMQTTClient client(
+  "brdgglance01",
+  "buckminsterwasright2424",
+  "broker.emqx.io",  // MQTT Broker server ip
+  "emqx",            // username
+  "public",   // mqtt password
+  "case01led03"      // Client name that uniquely identify your device
+);
 /*
 EspMQTTClient client(
   "FRDG-TEST-07",

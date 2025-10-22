@@ -37,7 +37,8 @@ export default function Home() {
     setBigMenuVisible(false)
   }
   return (
-    <div className="m-2">
+    <div className="m-2 
+      overflow-hidden">
       <div className="
         p-[1vw] pr-[3vw] 
         w-[100vw] h-full

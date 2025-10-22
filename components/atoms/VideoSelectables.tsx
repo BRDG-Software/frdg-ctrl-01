@@ -5,7 +5,8 @@ import { useState, useEffect } from "react"
 import Image from 'next/image'
 import data from '@/public/data.json'
 
-const VideoSelectables = ({imgRules, processedImgUrls, currentScreen}) => {
+const VideoSelectables = ({selectionMade, imgRules, processedImgUrls, currentScreen}) => {
+	//console.log(`curry screen ${currentScreen}`)
 	const displayKeys = Object.keys(imgRules)
 	const usernum = getRandomInt(9999,99999)
 	const userBuilt = "controller" + usernum
@@ -16,7 +17,10 @@ const VideoSelectables = ({imgRules, processedImgUrls, currentScreen}) => {
 	const [room, setRoom] = useState("123")
 	const [userName, setUserName] = useState(userBuilt)
 	const [joined, setJoined] = useState(false)
-	console.log(currentScreen)
+	const [contentSelected, setContentSelected] = useState("walmart")
+	
+	const [singleOrAll, setSingleOrAll] = useState("single")
+
 	let dataArray = []
 	
 	const datain = data.contentRoutes
@@ -36,6 +40,46 @@ const VideoSelectables = ({imgRules, processedImgUrls, currentScreen}) => {
 	
 	const [iconUrls, setIconUrls] = useState(dataObj)
 
+	let currentDatas = {}
+
+	useEffect(() => {
+		//console.log(`caseid? ${Object.values(JSON.parse(selectionMade))}`)
+		const caseId = Object.values(JSON.parse(selectionMade))
+		if (caseId == "ALL") {
+			setSingleOrAll("all")
+		}
+		else {
+			setSingleOrAll("single")
+		}
+	}, [selectionMade])
+
+	const updateCurrentData = async () => {
+		console.log(`currentDatas: ${JSON.stringify(currentDatas)}`)
+		try {
+			const msg = {
+				someData:"cool data"
+			}
+			const response = await fetch('/api/updatecurrentdata', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(currentDatas)
+			})
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+				//let result = ""
+		    const result = await response.json() //.then(updateCase(result))
+		    //console.log(result)
+		    //setCurrentResult(result)
+		  } 
+	    catch (err) {
+	      console.error('Error making POST request:', err);
+	    }
+	}
+
 	const handleJoinRoom = () => {
 		if (room && userName) {
 		  socket.emit("join-room", { room, username: userName})
@@ -51,7 +95,7 @@ const VideoSelectables = ({imgRules, processedImgUrls, currentScreen}) => {
 	useEffect(() => {
 		handleJoinRoom()
 		socket.on("message", (data) => {
-		  console.log(data)
+		  //console.log(`da datas ${data}`)
 		  setMessage((prev) => [...prev, data])
 		})
 		socket.on("user_joined", (message) => {
@@ -68,22 +112,35 @@ const VideoSelectables = ({imgRules, processedImgUrls, currentScreen}) => {
 		change current content to /imgSingle
 	*/
 	const doContent = (key) => {
+		//console.log(`single or all ${singleOrAll}`)
 		//console.log(`VideoSelectables: attempting to change content on screen: ${currentScreen} to ${key}`)
+		setContentSelected(key)
+		currentDatas[Object.values(JSON.parse(selectionMade))] = {
+				"displayOptions": {
+					"currentContent": key,
+					"displayType":singleOrAll
+				}
+		}
 		const message = `{"screen":"${currentScreen}", "content": "${key}", "displayType":"all"}`
 		const data = { room, message, sender: userName };
 		setMessage((prev) => [...prev, {sender: userName, message}])
 		socket.emit("message", data)
 		//console.log(message)
+		updateCurrentData()
 	}
 
 	return (
 		<div className="
-			grid 
-			w-full
+			grid
+			w-full h-[62vh]
 			text-left
-			-ml-[1.8vw] -mt-[3vh]
+			-ml-[1.8vw] -mt-[18vh]
 			pl-[4.6vw]
-		">
+			overflow-y-scroll overscroll-x-none
+			overflow-x-hidden
+		"
+		style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+		>
 
 			{displayKeys.map((key) => (
 				<div className="

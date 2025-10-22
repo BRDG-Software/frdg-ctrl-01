@@ -69,7 +69,7 @@ const FrameScroller = ({screen, image, prefixo, routeRules, imgWidth, sideloader
 		lowered: {
 		  y: 0, 
 		  opacity: 1.0, 
-		  transition: { duration: 1.5}
+		  transition: { duration: 1.0}
 		}
 	}
 	const [currentAnimation, setCurrentAnimation] = useState(animationFaded)
@@ -104,7 +104,7 @@ const FrameScroller = ({screen, image, prefixo, routeRules, imgWidth, sideloader
 			  vidBout()
 			  doZreset()
 			}
-		}, animDelay+150)
+		}, animDelay+250)
 	}
 	const vidBin = () => {
 		if (vidBinRef.current) {

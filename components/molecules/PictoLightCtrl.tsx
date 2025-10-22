@@ -3,7 +3,7 @@ each pixel on led is approx. 0.163669064"
 there is a good deal of variance here
 */
 'use client'
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
 import { convertColor, mapRange, byteToString, getRandomInt } from '@/utils/utils.js'
@@ -16,6 +16,13 @@ import CaseToggle from '@/components/atoms/CaseToggle'
 import SendButton from '@/components/atoms/SendButton'
 
 const PictoLightCtrl = ({selectionMade, currentShelf}) => {
+	
+		//on render, set a timer to wait for settings to load,
+		//before sending messages or updating data
+	const [loaded, setLoaded] = useState(false)
+	const loadTimerRef = useRef(null)
+	const loadingTime = 1000
+
 	const [lightOn, setLightOn] = useState(true)
 	const [lockedColor, setLockedColor] = useState("#000000")
 	const [currentColor, setCurrentColor] = useState("#000000")
@@ -54,11 +61,23 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		//console.log(vally)
 		//console.log(currentShelf)
 		getCurrentData()
+		loadTimer()
 	},[])
+
+	const loadTimer = () => {
+		if (loadTimerRef.current) {
+			clearTimeout(loadTimerRef.current)
+			loadTimerRef.current = null
+		}
+		loadTimerRef.current = setTimeout(() => {
+			console.log("loading done")
+			setLoaded(true)
+		}, loadingTime)
+	}
 	
 	const updateFromSaved = (objecty) => {
 				let readout = JSON.stringify(objecty)
-				console.log(`saved shelf sections settings: ${JSON.stringify(objecty)}`)
+				//console.log(`saved shelf sections settings: ${JSON.stringify(objecty)}`)
 				setLightPosition(objecty.position)
 				setCurrentPosition(objecty.position)
 				setLightWidth(objecty.width)
@@ -79,7 +98,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 	}, [currentResult])
 	useEffect(() => {
 		if (currentResult !== undefined) {
-			console.log(`saved settings are ${currentResult}`)
+			//console.log(`saved settings are ${currentResult}`)
 			let currentObj = currentResult[currentSection]
 			if (currentObj !== undefined) {
 				updateFromSaved(currentObj)
@@ -208,8 +227,8 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 	  }
 
 	useEffect(() => {
-		//setShelfDataFromChild("")
 		
+		//setShelfDataFromChild("")
 		//setResetShelf(getRandomInt(1,9999))
 		
 		let casey = JSON.parse(selectionMade)
@@ -229,7 +248,15 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		}
 		else {setCaseConverted(currentCase)}
 	}, [currentCase])
+
 	useEffect(() => {
+		if (currentResult !== undefined) {
+			let currentObj = currentResult[currentSection]
+			if (currentObj !== undefined) {
+				getCurrentData()
+				//updateFromSaved(currentObj)
+			}	
+		}		
 		if (currentShelf == "ALL"){
 			setShelfConverted("255")
 		}
@@ -252,6 +279,58 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 			//	+ "W000000" )
 		}
 	}, [lightOn])
+	
+	const updateCurrentData = async () => {
+		let tempSectionData = {}
+		let tempShelfData = {}
+		let tempLightData = {}
+		let tempCaseData = {}
+		if (loaded == true) {
+			console.log(`selecty ${selectionMade}`)
+			console.log(`shelfy: ${currentShelf}`)
+			console.log(`sectiono: ${currentSection}`)
+			console.log(`sending update to backend`)
+			//console.log(`section: ${}`)
+			console.log(`show: ${lightOn}`)
+			console.log(`position: ${lightPosition}`)
+			console.log(`width: ${lightWidth}`)
+			console.log(`color: ${currentColor}`)
+			console.log(`animation: ${currentAnimation}`)
+			tempSectionData[currentSection] = {
+				show: lightOn,
+				position: lightPosition,
+				width: lightWidth,
+				color: currentColor,
+				animation: currentAnimation
+			}
+			tempShelfData[currentShelf] = tempSectionData
+			tempLightData[Object.keys(JSON.parse(selectionMade))] = tempShelfData
+			tempCaseData[Object.values(JSON.parse(selectionMade))] = tempLightData
+			console.log(`new data will be ${JSON.stringify(tempCaseData)}`)	
+			try {
+				const response = await fetch('/api/updatecurrentdata', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(tempCaseData)
+				})
+
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+					//let result = ""
+			    const result = await response.json() //.then(updateCase(result))
+			    //console.log(result)
+			    //setCurrentResult(result)
+			  } 
+		    catch (err) {
+		      console.error('Error making POST request:', err);
+		    }
+
+		}
+	}
+
 	const [senderRand,setSenderRand] = useState(0)
 
 	const burstMessage = () => {
@@ -262,7 +341,9 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		setSenderRand(Math.random())
 	}
 	useEffect(() => {
-		sendMessage()
+		if (loaded == true) {
+			sendMessage()
+		}
 	},[ senderRand])
 
 	useEffect(() => {
@@ -286,6 +367,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 		      const result = response//await response.json();
+		      updateCurrentData()
 	    } 
 	    catch (err) {
 	      console.error('Error making POST request:', err);
@@ -296,7 +378,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		<div className="w-full h-full">
 			<div className="
 				w-full h-full 
-				pt-0
+				pt-0 
 				grid grid-cols-20 
 				grid-rows-40
 				font-regular

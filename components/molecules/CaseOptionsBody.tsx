@@ -97,13 +97,16 @@ const CaseOptionsBody = ({selectionMade, currentSelection}) => {
 			w-full h-full
 			justify-items-center
 			text-center
+
 		">
 			<div>
 				{caseDisplay && (
 				<div className="
 					h-full w-full
+					mt-[15vh]
 				">	
 					<VideoSelectables
+						selectionMade={selectionMade}
 						imgRules={imgRules}
 						processedImgUrls={processedImgUrls}
 						currentScreen={currentScreen}

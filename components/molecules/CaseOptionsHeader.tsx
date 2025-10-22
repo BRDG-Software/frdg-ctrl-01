@@ -12,11 +12,11 @@ const CaseOptionsHeader = ({selectionMade}) => {
 
 	const [namo, setNamo] = useState("")
 	const [currentValue, setCurrentValue]  = useState("")
-	const [currentScreen, setCurrentScreen] = useState(1)
+	const [currentScreen, setCurrentScreen] = useState("screen1")
 	const [displayURL, setDisplayURL] = useState("")
 	
 	const [currentCase, setCurrentCase] = useState("")
-	const [currentContent, setCurrentContent] = useState("/blank.png")
+	const [currentContent, setCurrentContent] = useState("walmart")
 
 	const [currentResult, setCurrentResult] = useState("")
 
@@ -45,6 +45,9 @@ const CaseOptionsHeader = ({selectionMade}) => {
 	      console.error('Error making GET request:', err);
 	    }
 	}
+	useEffect(()=> {
+		getCurrentData()
+	},[])
 	useEffect(() => {
 		if (currentResult !== undefined) {
 			if (currentResult.displayOptions !== undefined) {
@@ -57,16 +60,22 @@ const CaseOptionsHeader = ({selectionMade}) => {
 		if (caseDisplay == true) {
 			//console.log(`updating to ${value}`)
 			//console.log(parseInt(value))
+			//setCurrentScreen(value)
 			if (value != "ALL") {
-				setCurrentScreen(parseInt(value))
-				//console.log(`current screen: ${currentScreen}`)
+				//console.log(`screeny ${parseInt(value)}`)
+				setCurrentScreen("screen" + parseInt(value))
 			}
+			else {
+				setCurrentScreen("all")
+			}
+				//setCurrentScreen(parseInt(value))
+				//console.log(`current screen: ${currentScreen}`)
+			//}
 		}
 	}
 
 	useEffect(() => {
 		if (selectionMade !== "") {
-
 			let selParsed = JSON.parse(selectionMade)
 			Object.keys(selParsed).forEach(function(key) {
 				let keyo = Object.keys(selParsed) 
@@ -188,7 +197,7 @@ const CaseOptionsHeader = ({selectionMade}) => {
 				{caseDisplay && 
 		      <div className="w-full h-full 
 		      	place-items-center grid
-		      	text-[5vw]
+		      	text-[5vw] 
 		      	">
 							<div className="
 								w-[92vw] 
@@ -196,7 +205,7 @@ const CaseOptionsHeader = ({selectionMade}) => {
 								">
 								<Image
 						            key={3434}
-						            src={currentContent}
+						            src={"/imgIcon/"+currentScreen + "/" + currentContent + "/frame1.png"}
 						            width={960}
 						            height={0}
 						            priority
