@@ -112,6 +112,7 @@ const VideoSelectables = ({selectionMade, imgRules, processedImgUrls, currentScr
 		change current content to /imgSingle
 	*/
 	const doContent = (key) => {
+		console.log(`keyoooo ${key}`)
 		//console.log(`single or all ${singleOrAll}`)
 		//console.log(`VideoSelectables: attempting to change content on screen: ${currentScreen} to ${key}`)
 		setContentSelected(key)
@@ -141,7 +142,23 @@ const VideoSelectables = ({selectionMade, imgRules, processedImgUrls, currentScr
 		"
 		style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
 		>
-
+			<div className="
+				w-full
+			">
+				<h1 className="w-full"
+					style={{fontSize: '5vw'}}
+				>
+					Blank Navigation
+				</h1>
+				<div className="
+						w-[90vw] 
+						h-[10vh] 
+						bg-[#000]
+						"
+						onClick={() => doContent("blank")}
+						>
+				</div>
+			</div>
 			{displayKeys.map((key) => (
 				<div className="
 					w-full 

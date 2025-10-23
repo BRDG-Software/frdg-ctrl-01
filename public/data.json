@@ -30,12 +30,6 @@
 				"animate": true,
 				"frames": 2,
 				"icons":"/imgIcon/all/elp/frame1.png"
-			},
-			"rollback":{
-				"title":"Rollback",
-				"animate": true,
-				"frames": 2,
-				"icons":"/imgIcon/all/rollback/frame1.png"
 			}
 		},
 	"displayOptions":

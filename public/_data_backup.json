@@ -4,27 +4,38 @@
 			"walmart": {
 				"title":"Main Navigation",
 				"animate":false,
-				"frames":1
+				"frames":1,
+				"icons":"/imgIcon/all/walmart/frame1.png"
 			},
 			"kraft": {
 				"title":"Vendor Ad - Kraft Singles",
 				"animate":false,
-				"frames":1
+				"frames":1,
+				"icons":"/imgIcon/all/kraft/frame1.png"
+			},
+			"tyson": {
+				"title":"Vendor Ad - Tyson Foods",
+				"animate":false,
+				"frames":1,
+				"icons":"/imgIcon/all/tyson/frame1.png"
 			},
 			"storebranded":{
 				"title":"Store Ad - Horizon Organic",
 				"animate":false,
-				"frames":1
+				"frames":1,
+				"icons":"/imgIcon/all/storebranded/frame1.png"
 			},
 			"elp": {
 				"title":"Every Day Low Prices",
 				"animate": true,
-				"frames": 6
+				"frames": 2,
+				"icons":"/imgIcon/all/elp/frame1.png"
 			},
 			"rollback":{
 				"title":"Rollback",
 				"animate": true,
-				"frames": 6
+				"frames": 2,
+				"icons":"/imgIcon/all/rollback/frame1.png"
 			}
 		},
 	"displayOptions":
@@ -48,96 +59,64 @@
 				"key":4,
 				"name":"ALL",
 				"msg":"all"
-			},
-			{
-				"key":5,
-				"name":"002",
-				"msg":"screen2"
-			},
-			{
-				"key":6,
-				"name":"001",
-				"msg":"screen1"
-			},
-						{
-				"key":7,
-				"name":"ALL",
-				"msg":"all"
 			}
 		],
 	"pictolightOptions":
 		[
 			{
 				"key":1,
-				"name":"006",
-				"msg":"3248W10"
+				"name":"003",
+				"msg":"003"
 			},
 			{
 				"key":2,
-				"name":"005",
-				"msg":"420wwwW10"
+				"name":"002",
+				"msg":"002"
 			},
 			{
 				"key":3,
-				"name":"004",
-				"msg":"666gangstars"
-			},
-						{
-				"key":4,
-				"name":"003",
-				"msg":"all"
-			}
-			,
-						{
-				"key":5,
-				"name":"002",
-				"msg":"all"
-			},
-						{
-				"key":6,
 				"name":"001",
-				"msg":"000"
+				"msg":"001"
 			},
-						{
-				"key":7,
+			{
+				"key":4,
 				"name":"ALL",
 				"msg":"all"
-			}			
+			}
 		],
 	"pictolightShelfOptions":
 		[
 			{
 				"key":1,
 				"name":"005",
-				"msg":"3248W10"
+				"msg":"005"
 			},
 			{
 				"key":2,
 				"name":"004",
-				"msg":"420wwwW10"
+				"msg":"004"
 			},
 			{
 				"key":3,
 				"name":"003",
-				"msg":"666gangstars"
+				"msg":"003"
 			},
-						{
+			{
 				"key":4,
 				"name":"002",
-				"msg":"all"
-			}
-			,
-						{
+				"msg":"002"
+			},
+			{
 				"key":5,
 				"name":"001",
-				"msg":"all"
+				"msg":"001"
 			},
-						{
+			{
 				"key":6,
 				"name":"000",
 				"msg":"000"
 			},
-						{
+			{
 				"key":7,
 				"name":"ALL",
 				"msg":"all"
@@ -148,17 +127,17 @@
 			{
 				"key":1,
 				"name":"003",
-				"msg":"3248W10"
+				"msg":"003"
 			},
 			{
 				"key":2,
 				"name":"002",
-				"msg":"420wwwW10"
+				"msg":"002"
 			},
 			{
 				"key":3,
 				"name":"001",
-				"msg":"666gangstars"
+				"msg":"001"
 			},
 			{
 				"key":4,
@@ -170,37 +149,21 @@
 		[
 			{
 				"key":1,
-				"name":"006",
-				"msg":"3248W10"
+				"name":"003",
+				"msg":"003"
 			},
 			{
 				"key":2,
-				"name":"005",
-				"msg":"420wwwW10"
+				"name":"002",
+				"msg":"002"
 			},
 			{
 				"key":3,
-				"name":"004",
-				"msg":"666gangstars"
+				"name":"001",
+				"msg":"001"
 			},
 						{
 				"key":4,
-				"name":"003",
-				"msg":"all"
-			}
-			,
-						{
-				"key":5,
-				"name":"002",
-				"msg":"all"
-			},
-						{
-				"key":6,
-				"name":"001",
-				"msg":"000"
-			},
-						{
-				"key":7,
 				"name":"ALL",
 				"msg":"all"
 			}				
@@ -209,34 +172,33 @@
 		[
 			{
 				"key":1,
-				"name":"005",
-				"msg":"3248W10"
+				"name":"CANOPY",
+				"msg":"006"
 			},
 			{
 				"key":2,
-				"name":"004",
-				"msg":"420wwwW10"
+				"name":"005",
+				"msg":"005"
 			},
 			{
 				"key":3,
-				"name":"003",
-				"msg":"666gangstars"
+				"name":"004",
+				"msg":"004"
 			},
-						{
+			{
 				"key":4,
-				"name":"002",
-				"msg":"all"
-			}
-			,
-						{
-				"key":5,
-				"name":"001",
-				"msg":"all"
+				"name":"003",
+				"msg":"003"
 			},
-						{
+			{
+				"key":5,
+				"name":"002",
+				"msg":"002"
+			},
+			{
 				"key":6,
-				"name":"000",
-				"msg":"000"
+				"name":"001",
+				"msg":"001"
 			},
 						{
 				"key":7,

@@ -77,19 +77,19 @@ const CaseOptionsHeader = ({selectionMade}) => {
 				w-full
 				col-start-1 col-span-4
 				row-start-9
-				row-span-10 
+				row-span-10
 				pl-[6vw] pt-0
 				font-light text-[6vw] text-left
 			">
 				<div className="inline w-full">Label:</div>
-				<div className="inline w-full pl-10 font-bold">
+				<div className="inline w-full pl-[2vw] font-bold">
 					{currentShelf}</div>
 			</div>
 			)}
 			<div className="
 				col-start-8 col-span-5 
-				row-start-3
-				h-[10vh] w-[20vw]
+				row-start-2
+				h-[0vh] w-[20vw]
 				row-span-24
 				z-900
 			"> 
@@ -126,13 +126,13 @@ const CaseOptionsHeader = ({selectionMade}) => {
       {bigMenuVisible &&
       <div className="
         absolute top-0 left-0 z-400
-        w-screen
+        w-screen 
         h-screen
         "
         onClick={() => killMenu()}
         >
           <div className=" relative
-            top-100
+            top-[14vh]
           ">
           <BigMenu 
             className="z-500" 

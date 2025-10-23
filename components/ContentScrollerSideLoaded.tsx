@@ -234,7 +234,7 @@ const ContentScrollerSideLoaded = ({image, routeRules, hideSideLoader, isSample}
     setVidBvisible(false)
   }, [hideSideLoader])
 
-  let currentImage = "rollback"
+  let currentImage = "elp"
   let currentFrame = 1    // 1 to last frame, looping
   let numberOfFrames = 1
   let frameTime = 5000
@@ -280,6 +280,7 @@ const ContentScrollerSideLoaded = ({image, routeRules, hideSideLoader, isSample}
   const [frameId1, setFrameId1] = useState(1)
   const [frameId2, setFrameId2] = useState(2)
 
+  const [showContent, setShowContent] = useState(true)
   useEffect(() => {
     handleJoinRoom()
     socket.on("message", (data) => {
@@ -297,21 +298,25 @@ const ContentScrollerSideLoaded = ({image, routeRules, hideSideLoader, isSample}
 
             if (!noFly.includes(checkFly)) {
               currentImage = msgparse["content"]
-
-              if (mixer == 0) {
-                  setFrameId2(getRandomInt(0,9999))
-                  setVidurlB("/img/"+screenCurrent+"/"+currentImage+"/frame1.png")
-                  setCurrentImageB(currentImage)
-                  vidBin()
-                	mixer = 1
+              if (currentImage == "blank") {
 
               }
-              else if (mixer == 1) {
-                  setFrameId1(getRandomInt(0,9999))
-                	setVidurlA("/img/"+screenCurrent+"/"+currentImage+"/frame1.png")
-                  setCurrentImageA(currentImage)
-                  vidAin()
-                	mixer = 0
+              else {
+                if (mixer == 0) {
+                    setFrameId2(getRandomInt(0,9999))
+                    setVidurlB("/img/"+screenCurrent+"/"+currentImage+"/frame1.png")
+                    setCurrentImageB(currentImage)
+                    vidBin()
+                  	mixer = 1
+
+                }
+                else if (mixer == 1) {
+                    setFrameId1(getRandomInt(0,9999))
+                  	setVidurlA("/img/"+screenCurrent+"/"+currentImage+"/frame1.png")
+                    setCurrentImageA(currentImage)
+                    vidAin()
+                  	mixer = 0
+                }
               }
             }
           }

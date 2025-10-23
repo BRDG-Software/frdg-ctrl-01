@@ -95,7 +95,7 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
     },
     lowered: {
       y: 0, 
-      transition: { duration: 0.5}
+      transition: { duration: 1.5}
     }
   }
   const animationSpringdown =  {
@@ -119,6 +119,7 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
   const animationSlidedown =  {
     raised: {
       y: -400,  //-400
+      opacity: 1.0,
       transition: {
          duration:0
          
@@ -127,6 +128,7 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
     },
     lowered: {
       y: 0, 
+      opacity: 1.0,
       transition: { 
         duration: 1.5, //orig 0.5
         //ease: [0.123, 0.358, 0.132, 0.848]
@@ -149,7 +151,9 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
     }
   }
   //let currentAnimation = animationSlideup
-  const [currentAnimation, setCurrentAnimation] = useState(animationSlidedown)
+  const [currentAnimationA, setCurrentAnimationA] = useState(animationSlidedown)
+  const [currentAnimationB, setCurrentAnimationB] = useState(animationSlidedown)
+  
     // end animationz
   
   const animDelay = 400 //orig 400
@@ -168,7 +172,6 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
     doZResetRef.current = setTimeout(() => {
       setVidAzindex(0)
       setVidBzindex(0)
-      console.log("doing Z reset")
     }, animDelay+1400) //orig 150
   }
   const vidAin = () => {
@@ -176,7 +179,6 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
       clearTimeout(vidAinRef.current)
     }
     vidAinRef.current = setTimeout(() => {
-      console.log("now bring video A in ")
       setVidAvisible(true)
       setVidAzindex(200)
       vidBout()
@@ -188,7 +190,6 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
       clearTimeout(vidBinRef.current)
     }
     vidBinRef.current = setTimeout(() => {
-      console.log("now bring video B in ")
       setVidBvisible(true)
       setVidBzindex(200)
       doZreset()
@@ -200,7 +201,6 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
       clearTimeout(vidAoutRef.current)
     }
     vidAoutRef.current = setTimeout(() => {
-      console.log("video A leaving ")
       setVidAvisible(false)
     }, animDelay+1200) //orig 100
   }
@@ -209,7 +209,6 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
       clearTimeout(vidBoutRef.current)
     }
     vidBoutRef.current = setTimeout(() => {
-      console.log("video B leaving ")
       setVidBvisible(false)
     }, animDelay+1200)
   }
@@ -287,6 +286,8 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
   const [frameId1, setFrameId1] = useState(1)
   const [frameId2, setFrameId2] = useState(2)
 
+  const [showContent, setShowContent] = useState(true)
+
   useEffect(() => {
     handleJoinRoom()
     socket.on("message", (data) => {
@@ -308,34 +309,65 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
                   // unless you're on main navigation page
               currentImage = msgparse["content"]
               
-              let prefix = "/img/"
-              if (currentImage != "walmart") {
+                //dissolve out the video mixers if blank content selected
+              if (currentImage == "blank") {
+                console.log(`dissolve dat contentito`)
+                setShowContent(false)
+              }
+                //if blank not selected, do the videos
+              else {
+                setShowContent(true)
+                let prefix = "/img/"
+                if (currentImage == "walmart") {
+                  
+                  if (mixer == 0) {
+                    //setCurrentAnimationB(animationFaded)  
+                    console.log('animation B to faded')
+                  }
+                  else {
+                    //setCurrentAnimationA(animationFaded)
+                    console.log('animation A to faded')
+                  }
+                  //setCurrentAnimation(animationFaded)
+                }
+                else {
                   tellParentHideSideLoader("hide side loader now")
-              }
-              if (screeny != "all") {
-                prefix = "/imgSingle/"
-              }
-              let imgSRC = prefix+screenCurrent+"/"+currentImage+"/frame1.png"
-              console.log(imgSRC)
-              if (mixer == 0) {
-                  //console.log(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
-                  //setVidurlB(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
-                  setFrameId2(getRandomInt(0,9999))   
-                  setVidurlB(imgSRC)
-                  setCurrentPrefixB(prefix)
-                  setCurrentImageB(currentImage)
-                  vidBin()
-                	mixer = 1
-              }
-              else if (mixer == 1) {
-                  //console.log(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
-                	//setVidurlA(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
-                  setFrameId1(getRandomInt(0,9999))
-                  setVidurlA(imgSRC)
-                  setCurrentPrefixA(prefix)
-                  setCurrentImageA(currentImage)
-                  vidAin()
-                	mixer = 0
+                  if (mixer == 0) {
+                    //setCurrentAnimationB(animationSlidedown)  
+                    console.log('animation B to drop down')
+                  }
+                  else {
+                    //setCurrentAnimationA(animationSlidedown)
+                    console.log('animation A to drop down')
+                  }                
+                }
+                if (screeny != "all") {
+                  prefix = "/imgSingle/"
+                }
+                let imgSRC = prefix+screenCurrent+"/"+currentImage+"/frame1.png"
+                console.log(imgSRC)
+                if (mixer == 0) {
+                    //console.log(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
+                    //setVidurlB(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
+                    console.log(`bringing in image B`)
+                    setFrameId2(getRandomInt(0,9999))   
+                    setVidurlB(imgSRC)
+                    setCurrentPrefixB(prefix)
+                    setCurrentImageB(currentImage)
+                    vidBin()
+                  	mixer = 1
+                }
+                else if (mixer == 1) {
+                    //console.log(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
+                  	//setVidurlA(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
+                    console.log('bringing in image A')
+                    setFrameId1(getRandomInt(0,9999))
+                    setVidurlA(imgSRC)
+                    setCurrentPrefixA(prefix)
+                    setCurrentImageA(currentImage)
+                    vidAin()
+                  	mixer = 0
+                }
               }
             }
           }
@@ -354,6 +386,11 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
 
   }, []);  /// end useEffect()
 
+/*
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1}}
+        transition={{duration:1}}
+*/
   return (
     <div className="
       absolute left-0 top-0
@@ -361,42 +398,56 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
     "
     style={{width:'1920px', height:'360px'}}
     >
-
+      <AnimatePresence>
+      {showContent &&
       <motion.div
-        variants={currentAnimation}
-        initial="lowered"
-        animate={ vidAvisible? "lowered": "raised"}
-        className="absolute w-[1920px] h-[360px] left-0 top-0
-        "
-        style={{zIndex:`${vidAzindex}`}}
-        >
-          <FrameScroller
-            key={frameId1}
-            screen={screenCurrent} 
-            image={currentImageA}
-            prefixo={currentPrefixA}
-            routeRules={routeRules}
-            imgWidth={1920}
-          /> 
-        </motion.div>
-        <motion.div 
-          variants={currentAnimation}
-          initial="raised"
-          animate={ vidBvisible? "lowered": "raised"}
-          className="absolute w-[1920px] h-[360px] left-[0] top-[0]
+        key="fadeyoutty"
+        
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1}}
+        transition={{duration:1}}
+        exit={{opacity:0}}
+      >
+      <div>
+        <motion.div
+          variants={currentAnimationA}
+          initial="lowered"
+          animate={ vidAvisible? "lowered": "raised"}
+          className="absolute w-[1920px] h-[360px] left-0 top-0
           "
-          style={{
-            zIndex:`${vidBzindex}`}}
+          style={{zIndex:`${vidAzindex}`}}
           >
-          <FrameScroller
-            key={frameId2}
-            screen={screenCurrent} 
-            image={currentImageB}
-            prefixo={currentPrefixB}
-            routeRules={routeRules}
-            imgWidth={1920}
-          /> 
-        </motion.div>   
+            <FrameScroller
+              key={frameId1}
+              screen={screenCurrent} 
+              image={currentImageA}
+              prefixo={currentPrefixA}
+              routeRules={routeRules}
+              imgWidth={1920}
+            /> 
+          </motion.div>
+          <motion.div 
+            variants={currentAnimationB}
+            initial="raised"
+            animate={ vidBvisible? "lowered": "raised"}
+            className="absolute w-[1920px] h-[360px] left-[0] top-[0]
+            "
+            style={{
+              zIndex:`${vidBzindex}`}}
+            >
+            <FrameScroller
+              key={frameId2}
+              screen={screenCurrent} 
+              image={currentImageB}
+              prefixo={currentPrefixB}
+              routeRules={routeRules}
+              imgWidth={1920}
+            /> 
+          </motion.div>  
+          </div>
+        </motion.div> 
+      }
+      </AnimatePresence>
     </div>
 	)
 }

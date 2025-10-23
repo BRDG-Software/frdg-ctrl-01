@@ -1,3 +1,6 @@
+when trying to manually enter color, orientation of app breaks
+on product light, when loading fails, red warning bubble pops up
+
 
 todo:
 0. shelf pictolight menu 

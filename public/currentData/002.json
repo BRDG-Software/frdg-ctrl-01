@@ -225,9 +225,9 @@
     },
     "002": {
       "lightOn": true,
-      "sliderTemp": -255,
+      "sliderTemp": -105,
       "lightBrightness": 255,
-      "currentColor": "#00ff4c"
+      "currentColor": "#00ff51"
     },
     "003": {
       "lightOn": true,

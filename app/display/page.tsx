@@ -78,7 +78,7 @@ key="my-animated-div" // Important: Direct children of AnimatePresence must have
       cursor:'none'
         }}
     >
-      <div className="
+        <div className="
         z-500
         w-full h-full
         absolute
@@ -89,6 +89,7 @@ key="my-animated-div" // Important: Direct children of AnimatePresence must have
           routeRules={routeRules}
           />
       </div>
+
     <div className="
         absolute
         w-full h-full
@@ -103,11 +104,17 @@ key="my-animated-div" // Important: Direct children of AnimatePresence must have
           hideSideLoader={doHideSideLoader}
           />
       </div>
-    
+            <h1 className="
+          mt-[35vh] w-[20vw] h-[10vh] z-999 absolute 
+          text-white mix-blend-luminosity"
+        >
+        FREEEG TEMPERATURE
+        </h1>
+
     </div>
   );
 }
-
+//           text-white mix-blend-color-exclusion
 /*
     <div className="
         absolute

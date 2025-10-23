@@ -1,6 +1,6 @@
 {
   "displayOptions": {
-    "currentContent": "storebranded",
+    "currentContent": "walmart",
     "displayType": "all"
   },
   "pictolightOptions": {
@@ -224,16 +224,16 @@
       "currentColor": "#000000"
     },
     "002": {
-      "lightOn": true,
+      "lightOn": false,
       "sliderTemp": 255,
       "lightBrightness": 255,
-      "currentColor": "#ffffff"
+      "currentColor": "#42ff6b"
     },
     "003": {
       "lightOn": true,
       "sliderTemp": 150,
       "lightBrightness": 80,
-      "currentColor": "#22dd88"
+      "currentColor": "#ff0011"
     },
     "004": {
       "lightOn": true,
@@ -255,9 +255,9 @@
     },
     "ALL": {
       "lightOn": true,
-      "sliderTemp": -255,
-      "lightBrightness": 1,
-      "currentColor": "#000000"
+      "sliderTemp": 3,
+      "lightBrightness": 255,
+      "currentColor": "#92ff33"
     }
   }
 }

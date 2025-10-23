@@ -116,18 +116,22 @@ const CaseToggle = ({toggleMenu, id, name, value, selectionMade, currentMenu,
 */
   return (
 		<div className="
-      grid grid-rows-2
+      grid grid-rows-2 gap-0
       w-[20vw] v-[20vh]
       place-items-center
+      items-end
       content-end
     ">
 		  <div className="
-        w-[20vw] 
+        w-[20vw] h-[3vh]
+
+        w-fit
+        h-fit
       ">
         <p className="
           text-[3vw]
           text-[#001E60]
-          font-bold
+          font-bold align-text-bottom
         "
         > {nameo} </p>
       </div>

@@ -115,9 +115,9 @@ const CaseOptionsHeader = ({selectionMade}) => {
 		<div className="
 			w-full h-[22vh]
 			justify-items-center
-			text-center
+			text-center 
 			grid grid-cols-2
-			grid-rows-20
+			grid-rows-20 
 			gap-0
 			pt-[2vh]
 			p-[2vh] 
@@ -128,6 +128,7 @@ const CaseOptionsHeader = ({selectionMade}) => {
 				w-full
 				row-span-4
 				font-light
+				mt-[1vh] ml-[1vw]
 				text-[6vw] 
 				text-left
 			">
@@ -142,7 +143,7 @@ const CaseOptionsHeader = ({selectionMade}) => {
 					items-center
 				">
 					<div className="
-						relative -top-[9vh] 
+						relative -top-[6vh] 
 						w-full h-full
 					">
 					<Image
@@ -196,7 +197,7 @@ const CaseOptionsHeader = ({selectionMade}) => {
 			">
 				{caseDisplay && 
 		      <div className="w-full h-full 
-		      	place-items-center grid
+		      	place-items-center grid 
 		      	text-[5vw] 
 		      	">
 							<div className="

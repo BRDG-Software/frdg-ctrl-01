@@ -4,7 +4,13 @@ export const byteToString = (byteIn) => {
     let roundo = (byteIn + 0.0) / 100
     let converty = (Math.round(roundo * 100) / 100).toFixed(2);
     let outputty = String(converty.replace(".",""))
-    return outputty
+        //in case there are trailing 0s outside of the size 
+    let finalOut = outputty
+    //if (outputty.length > 3) {
+    //    finalOut = outputty.substring(0,3)
+    //}
+    //console.log(outputty)
+    return finalOut
 }
 export const convertColor = (colorIn) => {
     const hexo = colorIn.startsWith('#') ? colorIn.slice(1) : colorIn;

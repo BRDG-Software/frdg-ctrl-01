@@ -1,6 +1,6 @@
 {
   "displayOptions": {
-    "currentContent": "tyson",
+    "currentContent": "walmart",
     "displayType": "single"
   },
   "pictolightOptions": {
@@ -66,10 +66,10 @@
     },
     "003": {
       "001": {
-        "show": false,
-        "position": 75,
-        "width": 75,
-        "color": "#0000ff",
+        "show": true,
+        "position": 183,
+        "width": 278,
+        "color": "#54ff29",
         "animation": 3
       },
       "002": {
@@ -216,18 +216,18 @@
     }
   },
   "productlightOptions": {
-    "currentShelf": "002",
+    "currentShelf": "001",
     "001": {
-      "lightOn": false,
+      "lightOn": true,
       "sliderTemp": -255,
       "lightBrightness": 1,
-      "currentColor": "#000000"
+      "currentColor": "#ff5765"
     },
     "002": {
       "lightOn": true,
-      "sliderTemp": 255,
-      "lightBrightness": 55,
-      "currentColor": "#ff0008"
+      "sliderTemp": 198,
+      "lightBrightness": 233,
+      "currentColor": "#00ff22"
     },
     "003": {
       "lightOn": true,
@@ -254,10 +254,10 @@
       "currentColor": "#ff2600"
     },
     "ALL": {
-      "lightOn": true,
-      "sliderTemp": -255,
-      "lightBrightness": 1,
-      "currentColor": "#000000"
+      "lightOn": false,
+      "sliderTemp": 3,
+      "lightBrightness": 255,
+      "currentColor": "#00ff08"
     }
   }
 }

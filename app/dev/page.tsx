@@ -38,9 +38,11 @@ export default function Home() {
   }
   return (
     <div className="m-2 
-      overflow-hidden">
+      overflow-hidden
+      bg-[#001E60]
+      ">
       <div className="
-        p-[1vw] pr-[3vw] 
+        p-[1vw] pr-[3vw]
         w-[100vw] h-full
         grid grid-rows-40 gap-5
 

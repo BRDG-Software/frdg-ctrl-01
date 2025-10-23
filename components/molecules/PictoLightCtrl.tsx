@@ -190,7 +190,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 	const updateColor = () => {}
 	
 	function handleOnOffToggle(data) {
-		//console.log(`on or off? ${data}`)
+		console.log(`on or off? ${data}`)
 		setLightOn(data)
 	}
 	function handleChildAnimation(data) {
@@ -265,13 +265,13 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 
 
 	useEffect(() => {
-		if (lightOn == true) {
-			console.log('sending product light off message')
+		if (lightOn == false) {
+			console.log('pictolight turned off')
 			setCurrentMsg(caseConverted + shelfConverted + 'D' +
 				currentStart + currentEnd + '000000000W000000')
 		}
-		else if (lightOn == false) {
-			console.log('sending product light on message')
+		else if (lightOn == true) {
+			console.log('sending pictolight on message')
 			const nuColor = convertColor(currentColor)
 			//setCurrentMsg(caseConverted + shelfConverted + "D" +
 			//	currentStart + currentEnd + 
@@ -327,19 +327,22 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		    catch (err) {
 		      console.error('Error making POST request:', err);
 		    }
-
 		}
 	}
 
 	const [senderRand,setSenderRand] = useState(0)
 
 	const burstMessage = () => {
-		const nuColor = convertColor(currentColor) 
-		setCurrentMsg(caseConverted + shelfConverted + "D" + currentStart + currentEnd + 
-			byteToString(nuColor[0]) + byteToString(nuColor[1]) + byteToString(nuColor[2])
-			+ "W" + animationConverted + "000")
-		setSenderRand(Math.random())
+		console.log("burst")
+		if (lightOn == true) {
+			const nuColor = convertColor(currentColor) 
+			setCurrentMsg(caseConverted + shelfConverted + "D" + currentStart + currentEnd + 
+				byteToString(nuColor[0]) + byteToString(nuColor[1]) + byteToString(nuColor[2])
+				+ "W" + animationConverted + "000")
+			setSenderRand(Math.random())
+		}
 	}
+
 	useEffect(() => {
 		if (loaded == true) {
 			sendMessage()
@@ -379,7 +382,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 			<div className="
 				w-full h-full 
 				pt-0 
-				grid grid-cols-20 
+				grid grid-cols-20
 				grid-rows-40
 				font-regular
 				text-left 
@@ -632,7 +635,7 @@ const PictoLightCtrl = ({selectionMade, currentShelf}) => {
 		        onClick={() => killMenu()}
 		        >
 		          <div className=" relative
-		            top-100
+		            top-[33vh]
 		          ">
 		          <BigMenu 
 		            className="z-500" 

@@ -31,8 +31,8 @@ const ProductLightCtrl = ({selectionMade}) => {
 	const [lockedColor, setLockedColor] = useState("#000000")
 	const [lightTemp, setLightTemp] = useState("111")
 	const [lightTempReal, setLightTempReal] = useState("2000k")
-	const [coolTemp, setCoolTemp] = useState("000")
-	const [warmTemp, setWarmTemp] = useState("111")
+	const [coolTemp, setCoolTemp] = useState(0)//"000")
+	const [warmTemp, setWarmTemp] = useState(111)//"111")
 
 	const [lightBrightness, setLightBrightness] = useState("255")
 	const [sliderTemp, setSliderTemp] = useState("222")
@@ -66,19 +66,31 @@ const ProductLightCtrl = ({selectionMade}) => {
 	function handleChildTemp(data) {
 		setLightTemp(data)
 	}
-
+	function brightnessMultiply(color) {
+		let modBright = lightBrightness / 255
+		let modColor = color * modBright
+		let roundColor = (Math.floor(modColor* 100) /100)//.toFixed(0)
+		return (roundColor)
+	}
 	useEffect(() => {
 		//console.log(`light on: ${lightOn}`)
-		if (lightOn == true) {
+		if (lightOn == false) {
 			//console.log('sending product light off message')
 			setCurrentMsg(caseConverted + shelfConverted + 'T000255000000000W000000')
 		}
-		else if (lightOn == false) {
+		else if (lightOn == true) {
 			//console.log('sending product light on message')
-			const nuColor = convertColor(currentColor)
+			let nuColor = convertColor(currentColor)
+			let red = brightnessMultiply(nuColor[0])
+			let green = brightnessMultiply(nuColor[1])
+			let blue = brightnessMultiply(nuColor[2])
+			let warmbo = brightnessMultiply(warmTemp)
+			let coolio = brightnessMultiply(coolTemp)
+			//console.log(blue.toString())
+			//console.log(`nuColor: ${red}, ${green}, ${blue} `)
 			setCurrentMsg(caseConverted + shelfConverted + "T000255" + 
-				byteToString(nuColor[0]) + byteToString(nuColor[1]) + byteToString(nuColor[2])
-				+ "W" + coolTemp + warmTemp)
+				byteToString(red) + byteToString(green) + byteToString(blue)
+				+ "W" + byteToString(coolio) + byteToString(warmbo))
 		}
 	}, [lightOn])
 
@@ -97,15 +109,18 @@ const ProductLightCtrl = ({selectionMade}) => {
 		}
 		let tempyNumbers = parseInt(mapRange(tempy, -255, 255, 6000, 2000))
 		setLightTempReal(String(tempyNumbers) + "k")
-		setCoolTemp(byteToString(coldy))
-		setWarmTemp(byteToString(warmy))
+		setCoolTemp(coldy)
+		setWarmTemp(warmy)
+		//setCoolTemp(byteToString(coldy))
+		//setWarmTemp(byteToString(warmy))
 	}, [lightTemp])
 
 	function handleChildBrightness(data) {
 		setLightBrightness(data)
 	}
 	function handleOnOffToggle(data) {
-		//console.log(`on or off? ${data}`)
+		//const flipped = !data
+		//console.log(`on or off? ${flipped}`)
 		setLightOn(data)
 	}
 	function handleShelfToggleDataFromChild(data) {
@@ -181,10 +196,17 @@ const ProductLightCtrl = ({selectionMade}) => {
 	}, [currentCase])
 
 	const burstMessage = async() => {
+
+			console.log(typeof(warmTemp))
 			const nuColor = convertColor(currentColor)
+			let red = brightnessMultiply(nuColor[0])
+			let green = brightnessMultiply(nuColor[1])
+			let blue = brightnessMultiply(nuColor[2])
+			let warmbo = brightnessMultiply(warmTemp)
+			let coolio = brightnessMultiply(coolTemp)
 			setCurrentMsg(caseConverted + shelfConverted + "T000255" + 
-				byteToString(nuColor[0]) + byteToString(nuColor[1]) + byteToString(nuColor[2])
-				+ "W" + coolTemp + warmTemp)
+				byteToString(red) + byteToString(green) + byteToString(blue)
+				+ "W" + byteToString(coolio) + byteToString(warmbo))
 			console.log(`attempting to send led message: ${currentMsg}`)
 		
 	}
@@ -282,7 +304,7 @@ const ProductLightCtrl = ({selectionMade}) => {
 		}
 	}
 	let tempDatas = {}
-
+		//if we loaded memory from api as (currentResult) update our values
 	useEffect(() => {
 		if (currentResult !== undefined) {
 			const savedSettings = currentResult.productlightOptions
@@ -297,6 +319,7 @@ const ProductLightCtrl = ({selectionMade}) => {
 					//setSliderTemp(setty.sliderTemp)
 					//setLightBrightness(setty.lightBrightness)
 					//setCurrentColor(setty.currentColor)
+					console.log(`setty light ${setty.lightOn}`)
 					//setLightOn(setty.lightOn)
 					//setDefaultLightOn(setty.lightOn)
 					setRenderKey(getRandomInt(1,9999))
@@ -404,8 +427,8 @@ const ProductLightCtrl = ({selectionMade}) => {
 			<div className=" 
 				absolute 
 				w-[23vw] h-[8vh]
-				-top-[24vh]
-				left-[72vw]
+				-top-[23vh] 
+				left-[75vw]
 			">
 				<CaseToggle
 					key={renderKey+3}
@@ -526,7 +549,7 @@ const ProductLightCtrl = ({selectionMade}) => {
 
 				<div className="
 					col-start-2 col-span-4
-					row-start-15
+					row-start-13
 					row-span-2
 					text-[4vw]
 					font-regular
@@ -535,7 +558,8 @@ const ProductLightCtrl = ({selectionMade}) => {
 				</div>
 				<div className="
 					col-start-2 col-span-8
-					row-start-17
+					row-start-14
+					mt-[1vh]
 					row-span-4
 					text-[4.2vw]
 					font-bold
@@ -567,7 +591,7 @@ const ProductLightCtrl = ({selectionMade}) => {
 					col-start-10 
 					w-[40vw]
 					h-[40vw]
-					row-start-14
+					row-start-13
 					row-span-6
 				">
 					<ColorPicker
@@ -577,7 +601,7 @@ const ProductLightCtrl = ({selectionMade}) => {
 				<div className="
 					w-full h-full
 					col-start-2 col-span-6
-					row-start-20 row-span-4
+					row-start-18 row-span-4
 
 				">
 					<SendButton
@@ -595,7 +619,7 @@ const ProductLightCtrl = ({selectionMade}) => {
 			onClick={() => killMenu()}
 			>
 			  <div className=" relative
-			    -top-[5vh]
+			    -top-[12vh] 
 			  ">
 			  <BigMenu 
 			    className="z-500" 
