@@ -112,7 +112,9 @@ const CaseOptionsHeader = ({selectionMade}) => {
 				row-span-100
 			">
 				{!shelvesVisible ? (
-				<PictoLightCaseView/>
+				<PictoLightCaseView
+					selectionMade={selectionMade}
+				/>
 				) : (
 				<PictoLightCtrl
 					selectionMade={selectionMade}

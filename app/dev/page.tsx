@@ -13,21 +13,20 @@ import CaseOptions from '@/components/CaseOptions'
 export default function Home() {
   const [athing, setAthing] = useState("nope")
   const [currentMenu, setCurrentMenu] = useState("")
-  const [dataFromChild, setDataFromChild] = useState("")
+      //sets our default case selection
+  const [dataFromChild, setDataFromChild] = useState(`{"pictolightOptions":"001"}`)
   const [menuToggleFromChild, setMenuToggleFromChild] = useState("")
   const [bigMenuVisible, setBigMenuVisible] = useState(false)
 
   function handleToggleDataFromChild(data) {
     //setMenuToggleFromChild(data)
     doMenuChange(data)
-    //console.log(data)
-    //setCurrentMenu(data)
     setBigMenuVisible(true)
   }
 
   function handleDataFromChild(data) {
     setDataFromChild(data)
-    //console.log(data)
+    console.log(data)
     setBigMenuVisible(false)
   }
   const doMenuChange = (menuChange) => {
