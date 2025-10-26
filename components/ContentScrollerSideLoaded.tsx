@@ -281,6 +281,9 @@ const ContentScrollerSideLoaded = ({image, routeRules, hideSideLoader, isSample}
   const [frameId2, setFrameId2] = useState(2)
 
   const [showContent, setShowContent] = useState(true)
+
+  let previousImage = ""
+
   useEffect(() => {
     handleJoinRoom()
     socket.on("message", (data) => {
@@ -296,26 +299,30 @@ const ContentScrollerSideLoaded = ({image, routeRules, hideSideLoader, isSample}
             
             let checkFly = msgparse["content"]
 
-            if (!noFly.includes(checkFly)) {
-              currentImage = msgparse["content"]
-              if (currentImage == "blank") {
-
-              }
-              else {
-                if (mixer == 0) {
-                    setFrameId2(getRandomInt(0,9999))
-                    setVidurlB("/img/"+screenCurrent+"/"+currentImage+"/frame1.png")
-                    setCurrentImageB(currentImage)
-                    vidBin()
-                  	mixer = 1
+            if ( (previousImage != currentImage) || (screeny == "all") ) {
+              if (!noFly.includes(checkFly)) {
+                currentImage = msgparse["content"]
+                if (currentImage == "blank") {
 
                 }
-                else if (mixer == 1) {
-                    setFrameId1(getRandomInt(0,9999))
-                  	setVidurlA("/img/"+screenCurrent+"/"+currentImage+"/frame1.png")
-                    setCurrentImageA(currentImage)
-                    vidAin()
-                  	mixer = 0
+                else {
+                  if (mixer == 0) {
+                      setFrameId2(getRandomInt(0,9999))
+                      setVidurlB("/img/"+screenCurrent+"/"+currentImage+"/frame1.png")
+                      setCurrentImageB(currentImage)
+                      previousImage = currentImage
+                      vidBin()
+                    	mixer = 1
+
+                  }
+                  else if (mixer == 1) {
+                      setFrameId1(getRandomInt(0,9999))
+                    	setVidurlA("/img/"+screenCurrent+"/"+currentImage+"/frame1.png")
+                      setCurrentImageA(currentImage)
+                      previousImage = currentImage
+                      vidAin()
+                    	mixer = 0
+                  }
                 }
               }
             }
@@ -344,7 +351,7 @@ const ContentScrollerSideLoaded = ({image, routeRules, hideSideLoader, isSample}
 
       <motion.div
         variants={currentAnimation}
-        initial="lowered"
+        initial="raised"
         animate={ vidAvisible? "lowered": "raised"}
         className="absolute w-full h-full left-0 top-0
         "

@@ -2,7 +2,7 @@
 //import { useSearchParams } from 'next/navigation'
 import { getRandomInt } from '@/utils/utils.js'
 import { socket } from "@/lib/socketClient"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useSearchParams } from 'next/navigation'
 import ContentScroller from '@/components/ContentScroller'
 import ContentScrollerSideLoaded from '@/components/ContentScrollerSideLoaded'
@@ -83,7 +83,7 @@ key="my-animated-div" // Important: Direct children of AnimatePresence must have
         w-full h-full
         absolute
       ">
-        <ContentScroller 
+        <ContentScroller
           image={"walmart"}
           tellParentHideSideLoader={hideSideLoader}
           routeRules={routeRules}
@@ -104,12 +104,7 @@ key="my-animated-div" // Important: Direct children of AnimatePresence must have
           hideSideLoader={doHideSideLoader}
           />
       </div>
-            <h1 className="
-          mt-[35vh] w-[20vw] h-[10vh] z-999 absolute 
-          text-white mix-blend-luminosity"
-        >
-        FREEEG TEMPERATURE
-        </h1>
+
 
     </div>
   );

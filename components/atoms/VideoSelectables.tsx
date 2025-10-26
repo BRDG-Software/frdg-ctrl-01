@@ -1,7 +1,7 @@
 "use client"
 import { getRandomInt } from '@/utils/utils.js'
 import { socket } from "@/lib/socketClient"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from 'next/image'
 import data from '@/public/data.json'
 
@@ -20,6 +20,24 @@ const VideoSelectables = ({selectionMade, imgRules, processedImgUrls, currentScr
 	const [contentSelected, setContentSelected] = useState("walmart")
 	
 	const [singleOrAll, setSingleOrAll] = useState("single")
+
+	const [loaded, setLoaded] = useState(false)
+	const loadTimerRef = useRef(null)
+	const loadingTime = 2000
+	useEffect(() => {
+		loadTimer()
+	},[])
+
+	const loadTimer = () => {
+		if (loadTimerRef.current) {
+			clearTimeout(loadTimerRef.current)
+			loadTimerRef.current = null
+		}
+		loadTimerRef.current = setTimeout(() => {
+			console.log("loading done")
+			setLoaded(true)
+		}, loadingTime)
+	}
 
 	let dataArray = []
 	
@@ -112,22 +130,27 @@ const VideoSelectables = ({selectionMade, imgRules, processedImgUrls, currentScr
 		change current content to /imgSingle
 	*/
 	const doContent = (key) => {
-		console.log(`keyoooo ${key}`)
-		//console.log(`single or all ${singleOrAll}`)
-		//console.log(`VideoSelectables: attempting to change content on screen: ${currentScreen} to ${key}`)
-		setContentSelected(key)
-		currentDatas[Object.values(JSON.parse(selectionMade))] = {
-				"displayOptions": {
-					"currentContent": key,
-					"displayType":singleOrAll
-				}
+		if (loaded == true) {
+			console.log(`keyoooo ${key}`)
+			//console.log(`single or all ${singleOrAll}`)
+			//console.log(`VideoSelectables: attempting to change content on screen: ${currentScreen} to ${key}`)
+			setContentSelected(key)
+			currentDatas[Object.values(JSON.parse(selectionMade))] = {
+					"displayOptions": {
+						"currentContent": key,
+						"displayType":singleOrAll
+					}
+			}
+			const message = `{"screen":"${currentScreen}", "content": "${key}", "displayType":"all"}`
+			const data = { room, message, sender: userName };
+			setMessage((prev) => [...prev, {sender: userName, message}])
+			socket.emit("message", data)
+			//console.log(message)
+			updateCurrentData()
+
+			setLoaded(false)
+			loadTimer()
 		}
-		const message = `{"screen":"${currentScreen}", "content": "${key}", "displayType":"all"}`
-		const data = { room, message, sender: userName };
-		setMessage((prev) => [...prev, {sender: userName, message}])
-		socket.emit("message", data)
-		//console.log(message)
-		updateCurrentData()
 	}
 
 	return (

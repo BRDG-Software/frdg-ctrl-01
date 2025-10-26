@@ -25,9 +25,7 @@ import { useSearchParams } from 'next/navigation'
   // pass a screen value to issample
   // to prevent it from doing a url params search 
 const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}) => {
-  const loggit = (msg) => {
-    //console.log(msg)
-  }
+
   const searchParams = useSearchParams()
   let screeno = 1//searchParams.get('screen')
 
@@ -39,6 +37,16 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
     //console.log("do the search params")
     screeno = searchParams.get('screen')
   }
+
+  
+  const frdgIds = [
+    {id:0, casieId:"0"}, 
+    {id:1, caseId:"30"},
+    {id:2, caseId:"31"},
+    {id:3, caseId:"32"}
+  ]
+  const [frdgId,setFrdgId] = useState(frdgIds[screeno].caseId)
+  //console.log(frdgId)
 
   const usernum = getRandomInt(9999,99999)
   const userBuilt = "player" + usernum
@@ -278,6 +286,7 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
   const [currentImageB, setCurrentImageB] = useState(currentImage)
   const [currentPrefixA, setCurrentPrefixA] = useState('/img/')
   const [currentPrefixB, setCurrentPrefixB] = useState('/img/')
+  
     //dont display the side loader content on main vid
   const noFly = ['rollback', 'elp']
   
@@ -287,96 +296,85 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
   const [frameId2, setFrameId2] = useState(2)
 
   const [showContent, setShowContent] = useState(true)
-
+  
+  let previousImage = ""
+  
   useEffect(() => {
     handleJoinRoom()
+    console.log('IT REFRESHED')
+
     socket.on("message", (data) => {
-      let msgparse = JSON.parse(data.message)
-              // if the message is NOT a system message, update the content
-      if (msgparse["system"] === undefined) {
-        let screeny = (msgparse["screen"])
-        
-        if (typeof message == 'string') {
-          if ((screeny == "all") || (screeny == screenCurrent)) {
-            
-              //make sure we're not loading the side loader content
-              //in the main view
-            let checkFly = msgparse["content"]
-            
-            if (!noFly.includes(checkFly)) {
+    
+        let msgparse = JSON.parse(data.message)
+                // if the message is NOT a system message, update the content
+        if (msgparse["system"] === undefined) {
+          let screeny = (msgparse["screen"])
           
-                  // tell the parent to hide the side loader 
-                  // unless you're on main navigation page
-              currentImage = msgparse["content"]
+          if (typeof message == 'string') {
+            if ((screeny == "all") || (screeny == screenCurrent)) {
               
-                //dissolve out the video mixers if blank content selected
-              if (currentImage == "blank") {
-                console.log(`dissolve dat contentito`)
-                setShowContent(false)
-              }
-                //if blank not selected, do the videos
-              else {
-                setShowContent(true)
-                let prefix = "/img/"
-                if (currentImage == "walmart") {
-                  
-                  if (mixer == 0) {
-                    //setCurrentAnimationB(animationFaded)  
-                    console.log('animation B to faded')
-                  }
-                  else {
-                    //setCurrentAnimationA(animationFaded)
-                    console.log('animation A to faded')
-                  }
-                  //setCurrentAnimation(animationFaded)
+                //make sure we're not loading the side loader content
+                //in the main view
+              let checkFly = msgparse["content"]
+              
+              if (!noFly.includes(checkFly)) {
+            
+                    // tell the parent to hide the side loader 
+                    // unless you're on main navigation page
+                currentImage = msgparse["content"]
+                
+                  //dissolve out the video mixers if blank content selected
+                if (currentImage == "blank") {
+                  console.log(`dissolve dat contentito`)
+                  setShowContent(false)
                 }
+                  //if blank not selected, do the videos
                 else {
-                  tellParentHideSideLoader("hide side loader now")
-                  if (mixer == 0) {
-                    //setCurrentAnimationB(animationSlidedown)  
-                    console.log('animation B to drop down')
+                  if ( (previousImage != currentImage) || (screeny == "all") ) {
+                    setShowContent(true)
+                    let prefix = "/img/"
+                    if (currentImage != "walmart") {
+                      tellParentHideSideLoader("hide side loader now")
+                    }
+                    if (screeny != "all") {
+                      prefix = "/imgSingle/"
+                    }
+                    let imgSRC = prefix+screenCurrent+"/"+currentImage+"/frame1.png"
+                    //console.log(imgSRC)
+                    if (mixer == 0) {
+                        console.log(`bringing in image B`)
+                        setFrameId2(getRandomInt(0,9999))   
+                        setVidurlB(imgSRC)
+                        setCurrentPrefixB(prefix)
+                        setCurrentImageB(currentImage)
+                        previousImage = currentImage
+                        //setPreviousImage(currentImage)
+                        vidBin()
+                      	mixer = 1
+                        //loadTimer()
+                    }
+                    else if (mixer == 1) {
+                        console.log('bringing in image A')
+                        setFrameId1(getRandomInt(0,9999))
+                        setVidurlA(imgSRC)
+                        setCurrentPrefixA(prefix)
+                        setCurrentImageA(currentImage)
+                        previousImage = currentImage
+                        //setPreviousImage(currentImage)
+                        vidAin()
+                      	mixer = 0
+                        //loadTimer()
+                    }
                   }
-                  else {
-                    //setCurrentAnimationA(animationSlidedown)
-                    console.log('animation A to drop down')
-                  }                
-                }
-                if (screeny != "all") {
-                  prefix = "/imgSingle/"
-                }
-                let imgSRC = prefix+screenCurrent+"/"+currentImage+"/frame1.png"
-                console.log(imgSRC)
-                if (mixer == 0) {
-                    //console.log(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
-                    //setVidurlB(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
-                    console.log(`bringing in image B`)
-                    setFrameId2(getRandomInt(0,9999))   
-                    setVidurlB(imgSRC)
-                    setCurrentPrefixB(prefix)
-                    setCurrentImageB(currentImage)
-                    vidBin()
-                  	mixer = 1
-                }
-                else if (mixer == 1) {
-                    //console.log(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
-                  	//setVidurlA(prefix+screenCurrent+"/"+currentImage+"/frame1.png")
-                    console.log('bringing in image A')
-                    setFrameId1(getRandomInt(0,9999))
-                    setVidurlA(imgSRC)
-                    setCurrentPrefixA(prefix)
-                    setCurrentImageA(currentImage)
-                    vidAin()
-                  	mixer = 0
                 }
               }
             }
           }
+        } ////endo of msgparse["system"] === undefined
+        else if (msgparse["system"] == "refresh") {
+          loggit("doing a hella refreshe")
+          refresher()
         }
-      } ////endo of msgparse["system"] === undefined
-      else if (msgparse["system"] == "refresh") {
-        loggit("doing a hella refreshe")
-        refresher()
-      }
     })
     return () => {
       socket.off("user_joined")
@@ -448,6 +446,45 @@ const ContentScroller = ({image, routeRules, tellParentHideSideLoader, isSample}
         </motion.div> 
       }
       </AnimatePresence>
+          
+      <div className="
+          mt-65 ml-13 w-100 h-25 z-999 absolute 
+          
+          text-white mix-blend-luminosity
+          grid
+          grid-cols-30 gap-0
+          rows-1
+          place-items-center
+          justify-center
+          items-center
+      ">
+        <div className="
+          col-start-1 text-[18px]
+          font-regular 
+          w-9 h-9 
+          border-solid border-white
+          border-2 
+          flex items-center justify-center
+        "> A1
+        </div>
+        <div className="col-start-5 text-[18px]
+          w-9 h-9 
+          font-regular
+          border-solid border-white
+          border-2 
+          flex items-center justify-center
+        "> {frdgId}
+        </div>
+        <div className="
+        w-20 h-13
+        col-start-11 text-[15px]
+        font-regular
+        flex items-center justify-center
+        ">
+        33&deg;F &nbsp; .5&deg;C
+        </div>
+      </div>
+
     </div>
 	)
 }

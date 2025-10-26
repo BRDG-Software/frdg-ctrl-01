@@ -17,9 +17,8 @@ const FrameScroller = ({screen, image, prefixo, routeRules, imgWidth, sideloader
   const [vidBzindex, setVidBzindex] = useState(0)
   const [prefixA, setPrefixA] = useState('/img/')
   const [prefixB, setPrefixB] = useState('/img/')
-  console.log(image)
-  //console.log(routeRules)
-	const imgRules = routeRules.contentRoutes
+  
+  	const imgRules = routeRules.contentRoutes
 	let currentImage = image
 	let currentFrame = 1    // 1 to last frame, looping
 	//let numberOfFrames = 1
