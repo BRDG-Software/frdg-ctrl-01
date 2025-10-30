@@ -1,6 +1,6 @@
 import fs from 'fs'
 import mqtt from 'mqtt'
-/*
+
 const options = {
   protocol: 'mqtt',
   host: '172.168.1.141',
@@ -9,8 +9,8 @@ const options = {
   username:'frig-test-publisho',
   password:'public'
 }
-*/
 
+/*
 const options = {
 	protocol: 'mqtt',
 	host: 'broker.emqx.io',
@@ -19,10 +19,11 @@ const options = {
 	username : 'emqx',
 	password : 'public'
 }
+*/
 
 const client = mqtt.connect(options)
 
-const msg = '001003T000255000000000W000000'
+const msg = '255255T000255255255255W000000'
 //const msg = '001003T000255255255255W000000'
 //const msg = '001003D000279255255255W000000'
 //const msg = '001003D000279000000000W000000'

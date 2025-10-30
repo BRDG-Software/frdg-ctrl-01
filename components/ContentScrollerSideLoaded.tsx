@@ -291,21 +291,24 @@ const ContentScrollerSideLoaded = ({image, routeRules, hideSideLoader, isSample}
 
               // if the message is NOT a system message, update the content
       if (msgparse["system"] === undefined) {
-        
+        console.log(`side scrolly received a mwesaage`)    
         let screeny = (msgparse["screen"])
         
         if (typeof message == 'string') {
           if ((screeny == "all") || (screeny == screenCurrent)) {
-            
+    
             let checkFly = msgparse["content"]
 
-            if ( (previousImage != currentImage) || (screeny == "all") ) {
+            //if ( (previousImage != currentImage) || (screeny == "all") ) {
+            if ( (screeny == "all") || (screeny == screenCurrent) ) {
+              
               if (!noFly.includes(checkFly)) {
                 currentImage = msgparse["content"]
                 if (currentImage == "blank") {
-
+                  
                 }
                 else {
+                  
                   if (mixer == 0) {
                       setFrameId2(getRandomInt(0,9999))
                       setVidurlB("/img/"+screenCurrent+"/"+currentImage+"/frame1.png")

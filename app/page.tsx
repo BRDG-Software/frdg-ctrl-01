@@ -7,27 +7,21 @@ import CaseToggle from '@/components/atoms/CaseToggle'
 import BigMenu from '@/components/BigMenu'
 import CaseOptions from '@/components/CaseOptions'
 
-
-
-
 export default function Home() {
   const [athing, setAthing] = useState("nope")
   const [currentMenu, setCurrentMenu] = useState("")
-  const [dataFromChild, setDataFromChild] = useState("")
+  const [dataFromChild, setDataFromChild] = useState('{"displayOptions":"ALL"}')
   const [menuToggleFromChild, setMenuToggleFromChild] = useState("")
   const [bigMenuVisible, setBigMenuVisible] = useState(false)
 
   function handleToggleDataFromChild(data) {
-    //setMenuToggleFromChild(data)
     doMenuChange(data)
-    //console.log(data)
-    //setCurrentMenu(data)
     setBigMenuVisible(true)
   }
 
   function handleDataFromChild(data) {
     setDataFromChild(data)
-    //console.log(data)
+    console.log(`dato ${data}`)
     setBigMenuVisible(false)
   }
   const doMenuChange = (menuChange) => {

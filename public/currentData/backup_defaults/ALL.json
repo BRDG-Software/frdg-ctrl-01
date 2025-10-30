@@ -1,28 +1,28 @@
 {
   "displayOptions": {
-    "currentContent": "blank",
-    "displayType": "single"
+    "currentContent": "walmart",
+    "displayType": "all"
   },
   "pictolightOptions": {
     "005": {
       "001": {
         "show": true,
-        "position": 75,
-        "width": 50,
+        "position": 70,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "002": {
         "show": true,
-        "position": 145,
-        "width": 50,
+        "position": 140,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "003": {
         "show": true,
         "position": 210,
-        "width": 50,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
@@ -37,22 +37,22 @@
     "004": {
       "001": {
         "show": true,
-        "position": 80,
-        "width": 100,
+        "position": 70,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "002": {
         "show": true,
-        "position": 200,
-        "width": 100,
+        "position": 140,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "003": {
-        "show": false,
-        "position": 250,
-        "width": 50,
+        "show": true,
+        "position": 210,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
@@ -67,22 +67,22 @@
     "003": {
       "001": {
         "show": true,
-        "position": 80,
-        "width": 100,
+        "position": 70,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "002": {
         "show": true,
-        "position": 200,
-        "width": 100,
+        "position": 140,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "003": {
-        "show": false,
-        "position": 250,
-        "width": 50,
+        "show": true,
+        "position": 210,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
@@ -97,22 +97,22 @@
     "002": {
       "001": {
         "show": true,
-        "position": 80,
-        "width": 100,
+        "position": 70,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "002": {
         "show": true,
-        "position": 200,
-        "width": 100,
+        "position": 140,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "003": {
-        "show": false,
-        "position": 250,
-        "width": 50,
+        "show": true,
+        "position": 210,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
@@ -127,22 +127,22 @@
     "001": {
       "001": {
         "show": true,
-        "position": 80,
-        "width": 100,
+        "position": 70,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "002": {
         "show": true,
-        "position": 200,
-        "width": 100,
+        "position": 140,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "003": {
-        "show": false,
-        "position": 250,
-        "width": 50,
+        "show": true,
+        "position": 210,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
@@ -157,22 +157,22 @@
     "000": {
       "001": {
         "show": true,
-        "position": 80,
-        "width": 100,
+        "position": 70,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "002": {
         "show": true,
-        "position": 200,
-        "width": 100,
+        "position": 140,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "003": {
-        "show": false,
-        "position": 250,
-        "width": 50,
+        "show": true,
+        "position": 210,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
@@ -187,22 +187,22 @@
     "ALL": {
       "001": {
         "show": true,
-        "position": 50,
-        "width": 50,
+        "position": 70,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "002": {
         "show": true,
-        "position": 160,
-        "width": 50,
+        "position": 140,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },
       "003": {
         "show": true,
-        "position": 200,
-        "width": 50,
+        "position": 210,
+        "width": 75,
         "color": "#0000ff",
         "animation": 4
       },

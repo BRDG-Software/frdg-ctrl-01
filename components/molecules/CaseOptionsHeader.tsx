@@ -117,7 +117,7 @@ const CaseOptionsHeader = ({selectionMade}) => {
 			justify-items-center
 			text-center 
 			grid grid-cols-2
-			grid-rows-20 
+			grid-rows-20
 			gap-0
 			pt-[2vh]
 			p-[2vh] 
@@ -195,28 +195,7 @@ const CaseOptionsHeader = ({selectionMade}) => {
 			<div className="
 				place-items-left
 			">
-				{caseDisplay && 
-		      <div className="w-full h-full 
-		      	place-items-center grid 
-		      	text-[5vw] 
-		      	">
-							<div className="
-								w-[92vw] 
-								h-[10vh] 
-								">
-								<Image
-						            key={3434}
-						            src={"/imgIcon/"+currentScreen + "/" + currentContent + "/frame1.png"}
-						            width={960}
-						            height={0}
-						            priority
-					            	loading="eager"
-						            alt="a frame"
-						            style={{width:'90vw', height: 'auto'}}
-								/>
-							</div>
-		      </div>
-	    	}
+
 			</div>
 			</div>	
             <div className="
@@ -250,3 +229,28 @@ i frame no worky on phone
 			      ></iframe>
 */
 export default CaseOptionsHeader
+
+/*
+				{caseDisplay && 
+		      <div className="w-full h-full 
+		      	place-items-center grid 
+		      	text-[5vw] 
+		      	">
+							<div className="
+								w-[92vw] 
+								h-[10vh] 
+								">
+								<Image
+						            key={3434}
+						            src={"/imgIcon/"+currentScreen + "/" + currentContent + "/frame1.png"}
+						            width={960}
+						            height={0}
+						            priority
+					            	loading="eager"
+						            alt="a frame"
+						            style={{width:'90vw', height: 'auto'}}
+								/>
+							</div>
+		      </div>
+	    	}
+*/

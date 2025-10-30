@@ -19,7 +19,9 @@ const BigMenu = ({ sendMenuMsgToParent, whichMenu }) => {
 		setOptions(data[whichMenu])
 		//console.log(data[whichMenu])
 	}, [whichMenu])
+
 	const [athing, setAthing] = useState("nah")
+	
 	return (
 	<div className="">
 		<div className="

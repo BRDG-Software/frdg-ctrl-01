@@ -1,3 +1,11 @@
+To Update App:
+1. delete local "node_modules" folder
+2. delete local ".next" folder
+3. while connected to the internet and inside root folder, run cmd "git pull"
+4. restart process manager 2 with cmd "pm2 restart all"
+
+
+
 ## Getting Started
 Server Pi needs to run next server in dev mode and mosquitto broker
 run "npm run dev:socket" as a pm2 process

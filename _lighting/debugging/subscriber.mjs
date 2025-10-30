@@ -6,7 +6,8 @@
 
 import fs from 'fs'
 import mqtt from 'mqtt'
-/*
+
+
 const options = {
 	protocol: 'mqtt',
 	host: '172.168.1.141',
@@ -15,7 +16,6 @@ const options = {
 	username:'frigito-subscribo',
 	password:'public'
 }
-*/
 
 const options = {
 	protocol: 'mqtt',

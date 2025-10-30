@@ -10,8 +10,7 @@ import CaseOptionsPictolight from '@/components/molecules/CaseOptionsPictolight'
 
 */
 const CaseOptions = ({ selectionMade }) => {
-	
-	const [caseDisplay, setCaseDisplay] = useState(false)
+	const [caseDisplay, setCaseDisplay] = useState(true)
 	const [casePicto, setCasePicto] = useState(false)
 	const [currentSelection, setCurrentSelection] = useState("")
 	
