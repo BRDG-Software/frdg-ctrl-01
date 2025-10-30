@@ -159,7 +159,7 @@ const VideoSelectables = ({selectionMade, imgRules, processedImgUrls, currentScr
 			w-full h-[62vh]
 			text-left
 			-ml-[1.8vw] -mt-[18vh]
-			pl-[4.6vw]
+			pl-[4.6vw] pb-[8vh]
 			overflow-y-scroll overscroll-x-none
 			overflow-x-hidden
 		"
@@ -168,14 +168,15 @@ const VideoSelectables = ({selectionMade, imgRules, processedImgUrls, currentScr
 			<div className="
 				w-full
 			">
-				<h1 className="w-full"
+				<h1 className="w-[90vw] "
 					style={{fontSize: '5vw'}}
+					onClick={() => doContent("blank")}
 				>
 					Blank Navigation
 				</h1>
 				<div className="
 						w-[90vw] 
-						h-[10vh] 
+						h-[9vh] 
 						bg-[#000]
 						"
 						onClick={() => doContent("blank")}
@@ -184,21 +185,22 @@ const VideoSelectables = ({selectionMade, imgRules, processedImgUrls, currentScr
 			</div>
 			{displayKeys.map((key) => (
 				<div className="
-					w-full 
+					w-full pt-[1vh]
 				" 
 				key={key}>
 				<h1 key={key} className="
-					w-full
-					h-[3.5vh] 
+					w-[90vw]
+					h-[4vh]
 				"
 				style={{
 	    			fontSize:'5vw'
 	    		}}
+	    		onClick={() => doContent(key)}
 				> 
 					{imgRules[key].title} </h1>
 					<div className="
 						w-[92vw] 
-						h-[10vh] 
+						h-[9vh] 
 						"
 						onClick={() => doContent(key)}
 						>

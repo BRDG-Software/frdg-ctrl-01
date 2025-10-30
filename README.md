@@ -3,6 +3,8 @@ To Update App:
 2. delete local ".next" folder
 3. while connected to the internet and inside root folder, run cmd "git pull"
 4. restart process manager 2 with cmd "pm2 restart all"
+6. if git pull fails, asking you to commit the changes on pi, in the app root folder
+	run "git reset --hard" and try pull again
 
 
 
